@@ -73,5 +73,5 @@
 
     mysqli_query($mysqli, "INSERT INTO User (login, passwd, first_name, last_name) VALUES ('admin', '" . hash('whirlpool', 'admin') . "', 'admin', 'admin')");
     mysqli_query($mysqli, "INSERT INTO User (login, passwd, first_name, last_name) VALUES ('test', '" . hash('whirlpool', 'test') . "', 'test', 'test')");
-
+    mysqli_close($mysqli);
 ?>
