@@ -1,8 +1,9 @@
 <html>
     <head>
         <title>Index</title>
+        <link rel="stylesheet" type="text/css" href="public/css/style.css">
     </head>
     <body>
-        Hello World
+        <?php include("templates/navbar.php")?>
     </body>
 </html>
