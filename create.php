@@ -44,7 +44,7 @@ function check_error_form()
   return ($error);
 }
 
-$error =check_error_form();
+$error = check_error_form();
 {
   if ($error === TRUE) {
     $query = "INSERT INTO user (passwd, fname, lname, email, address, city, postal_code, phone) VALUES ('" . hash('whirlpool', $_POST['passwd']) . "', '{$_POST['fname']}', '{$_POST['lname']}', '{$_POST['email']}', '{$_POST['address']}', '{$_POST['city']}', {$_POST['postal_code']}, '{$_POST['phone']}')";
