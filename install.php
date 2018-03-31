@@ -21,17 +21,19 @@
         `name` VARCHAR(255) NOT NULL,
         `description` VARCHAR(1024) NOT NULL,
         `img` VARCHAR(1024) DEFAULT 'img/default.png', 
-        `price` INT,
-        `stock` INT,
+        `price` FLOAT  NOT NULL,
+        `stock` INT  NOT NULL,
         PRIMARY KEY (`id`)
     )";
     mysqli_query($mysqli, $product_creation) ;
+
     $categories_creation = "CREATE TABLE `category` (
         `id` INT NOT NULL AUTO_INCREMENT,
         `name` VARCHAR(255) NOT NULL,
         PRIMARY KEY (`id`)
     )";
     mysqli_query($mysqli, $categories_creation);
+
     $category_map_creation = "CREATE TABLE `category_map` (
         `id` INT NOT NULL AUTO_INCREMENT,
         `product_id` INT NOT NULL,
@@ -44,6 +46,7 @@
     $order_creation = "CREATE TABLE `order` (
         `id` INT NOT NULL AUTO_INCREMENT,
         `customer_id` INT NOT NULL,
+        `date` DATETIME DEFAULT CURRENT_TIMESTAMP,
         PRIMARY KEY (`id`)
     )";
     mysqli_query($mysqli, $order_creation);
@@ -63,15 +66,16 @@
     mysqli_query($mysqli, "ALTER TABLE `order_item` ADD CONSTRAINT `order_item_fk0` FOREIGN KEY (`order_id`) REFERENCES `order`(`id`)");
     mysqli_query($mysqli, "ALTER TABLE `order_item` ADD CONSTRAINT `order_item_fk1` FOREIGN KEY (`product_id`) REFERENCES `product`(`id`)");
 
-    mysqli_query($mysqli, "INSERT INTO products (name, description, img, price, stock) VALUES ('McLaren MP4/3', 'best cars much wow', 'img/default.png', 10000, 4)"); 
-    mysqli_query($mysqli, "INSERT INTO products (name, description, img, price, stock) VALUES ('McLaren MP4/4', 'best cars much wow', 'img/default.png', 10000, 4)");
-    mysqli_query($mysqli, "INSERT INTO products (name, description, img, price, stock) VALUES ('McLaren MP4/5, 'best cars much wow', 'img/default.png', 10000, 4)");
-    mysqli_query($mysqli, "INSERT INTO products (name, description, img, price, stock) VALUES ('McLaren MP4/6', 'best cars much wow', 'img/default.png', 10000, 4)");
-    mysqli_query($mysqli, "INSERT INTO products (name, description, img, price, stock) VALUES ('McLaren MP4/7A', 'best cars much wow', 'img/default.png', 10000, 4)");
-    mysqli_query($mysqli, "INSERT INTO products (name, description, img, price, stock) VALUES ('McLaren MP4/8', 'best cars much wow', 'img/default.png', 10000, 4)");
-    mysqli_query($mysqli, "INSERT INTO products (name, description, img, price, stock) VALUES ('McLaren MP4/8', 'best cars much wow', 'img/default.png', 10000, 4)");
+    mysqli_query($mysqli, "INSERT INTO product (name, description, img, price, stock) VALUES ('McLaren MP4/3', 'best cars much wow', 'img/default.png', 10000, 4)"); 
+    mysqli_query($mysqli, "INSERT INTO product (name, description, img, price, stock) VALUES ('McLaren MP4/4', 'best cars much wow', 'img/default.png', 10000, 4)");
+    mysqli_query($mysqli, "INSERT INTO product (name, description, img, price, stock) VALUES ('McLaren MP4/5, 'best cars much wow', 'img/default.png', 10000, 4)");
+    mysqli_query($mysqli, "INSERT INTO product (name, description, img, price, stock) VALUES ('McLaren MP4/6', 'best cars much wow', 'img/default.png', 10000, 4)");
+    mysqli_query($mysqli, "INSERT INTO product (name, description, img, price, stock) VALUES ('McLaren MP4/7A', 'best cars much wow', 'img/default.png', 10000, 4)");
+    mysqli_query($mysqli, "INSERT INTO product (name, description, img, price, stock) VALUES ('McLaren MP4/8', 'best cars much wow', 'img/default.png', 10000, 4)");
+    mysqli_query($mysqli, "INSERT INTO product (name, description, img, price, stock) VALUES ('McLaren MP4/8', 'best cars much wow', 'img/default.png', 10000, 4)");
 
-    mysqli_query($mysqli, "INSERT INTO User (login, passwd, first_name, last_name) VALUES ('admin', '" . hash('whirlpool', 'admin') . "', 'admin', 'admin')");
-    mysqli_query($mysqli, "INSERT INTO User (login, passwd, first_name, last_name) VALUES ('test', '" . hash('whirlpool', 'test') . "', 'test', 'test')");
+    mysqli_query($mysqli, "INSERT INTO user (login, passwd, first_name, last_name) VALUES ('admin', '" . hash('whirlpool', 'admin') . "', 'admin', 'admin')");
+    mysqli_query($mysqli, "INSERT INTO user (login, passwd, first_name, last_name) VALUES ('test', '" . hash('whirlpool', 'test') . "', 'test', 'test')");
     mysqli_close($mysqli);
+    echo "<h1>Installation Done</h1>";
 ?>
