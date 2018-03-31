@@ -54,7 +54,7 @@ EOL;
         echo "<ul>";  
 
         echo <<<EOL
-        <form action="templates/buy.php">
+        <form action="buy.php">
             <button type="submit" "/>Commander</button>
         </form>
 EOL;

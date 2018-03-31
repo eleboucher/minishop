@@ -1,5 +1,8 @@
-<?php
-    include ('public/head.php');
-    echo get_head("index");
-    
-?>
+<html>
+    <head>
+        <title>Index</title>
+    </head>
+    <body>
+        Hello World
+    </body>
+</html>
