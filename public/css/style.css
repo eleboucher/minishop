@@ -110,6 +110,7 @@ nav li a:hover {
     position: relative;
     display: inline-block;
     background-color: #03a9f4;
+    justify-content: center;
 }
 .buy:hover {
     background-color: #4fc3f7;
