@@ -78,9 +78,8 @@
     mysqli_query($mysqli, "INSERT INTO product (name, description, img, price, stock) VALUES ('McLaren MP4/8', 'best cars much wow', 'https://image.ibb.co/jTEH0S/default.png', 10000, 4)");
     mysqli_query($mysqli, "INSERT INTO product (name, description, img, price, stock) VALUES ('McLaren MP4/8', 'best cars much wow', 'https://image.ibb.co/jTEH0S/default.png', 10000, 4)");
 
-
-    mysqli_query($mysqli, "INSERT INTO user (passwd, fname, lname, email, address, city, postal_code, phone) VALUES ('" . hash('whirlpool', 'admin') . "', 'admin', 'admin', 'admin', 'admin', 'admin', 'admin', 'admin')");
-    mysqli_query($mysqli, "INSERT INTO user (passwd, fname, lname, email, address, city, postal_code, phone) VALUES ('test', '" . hash('whirlpool', 'test') . "', 'test', 'test', 'test', 'test', 'test', 'test', 'test')");
+    mysqli_query($mysqli, "INSERT INTO user (passwd, fname, lname, email, 'address', city, postal_code, phone) VALUES ('" . hash('whirlpool', 'admin') . "', 'admin', 'admin', 'admin', 'admin', 'admin', 01, 'admin')") or die(mysqli_error($mysqli));
+    mysqli_query($mysqli, "INSERT INTO user (passwd, fname, lname, email, 'address', city, postal_code, phone) VALUES ('" . hash('whirlpool', 'test') . "', 'test', 'test', 'test', 'test', 'test', 02, 'test')");
     mysqli_close($mysqli);
     echo "<h1>Installation Done</h1>";
 ?>
