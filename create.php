@@ -1,6 +1,5 @@
 <?php
 include ("handle_db.php");
-include ("templates/head.php");
 
 function check_error_form()
 {
