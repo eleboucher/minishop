@@ -1,6 +1,5 @@
 <?php
-include ("handle_db.php");
-include ("templates/head.php");
+include ("ressources/handle_db.php");
 
 function connexion($email, $hash_passwd)
 {

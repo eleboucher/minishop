@@ -1,5 +1,5 @@
 <?php
-    include ("handle_db.php");
+    include ("ressources/handle_db.php");
     session_start();
 
     function remove_prod($id)

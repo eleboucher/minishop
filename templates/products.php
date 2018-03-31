@@ -1,5 +1,5 @@
 <?php
-    include ("handle_db.php");
+    include ("ressources/handle_db.php");
 
         $ret = query("SELECT * FROM `product`");
         
