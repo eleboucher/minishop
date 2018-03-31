@@ -1,5 +1,5 @@
 <?php
-    $mysqli = mysqli_connect("localhost", "root", "azerty");
+    $mysqli = mysqli_connect("localhost", "root", "berni196742");
 
     if (mysqli_connect_errno($mysqli)) {
         echo "Echec lors de la connexion à MySQL : " . mysqli_connect_error();
@@ -9,10 +9,14 @@
     mysqli_select_db($mysqli, "minishop");
     $user_creation = "CREATE TABLE `user` (
         `id` INT NOT NULL AUTO_INCREMENT,
-        `login` VARCHAR(255) NOT NULL UNIQUE,
         `passwd` VARCHAR(255) NOT NULL,
-        `first_name` VARCHAR(255),
-        `last_name` VARCHAR(255),
+        `fname` VARCHAR(255),
+        `lname` VARCHAR(255),
+        `email` VARCHAR(255),
+        `address` VARCHAR(255),
+        `city` VARCHAR(255),
+        `postal_code` INT NOT NULL,
+        `phone` VARCHAR (100),
         PRIMARY KEY (`id`)
     )";
     mysqli_query($mysqli, $user_creation);
@@ -68,15 +72,15 @@
 
     mysqli_query($mysqli, "INSERT INTO product (name, description, img, price, stock) VALUES ('McLaren MP4/3', 'best cars much wow', 'https://image.ibb.co/jTEH0S/default.png', 10000, 4)");
     mysqli_query($mysqli, "INSERT INTO product (name, description, img, price, stock) VALUES ('McLaren MP4/4', 'best cars much wow', 'https://image.ibb.co/jTEH0S/default.png', 10000, 4)");
-    mysqli_query($mysqli, "INSERT INTO product (name, description, img, price, stock) VALUES ('McLaren MP4/5, 'best cars much wow', 'https://image.ibb.co/jTEH0S/default.png', 10000, 4)");
+    mysqli_query($mysqli, "INSERT INTO product (name, description, img, price, stock) VALUES ('McLaren MP4/5', 'best cars much wow', 'https://image.ibb.co/jTEH0S/default.png', 10000, 4)");
     mysqli_query($mysqli, "INSERT INTO product (name, description, img, price, stock) VALUES ('McLaren MP4/6', 'best cars much wow', 'https://image.ibb.co/jTEH0S/default.png', 10000, 4)");
     mysqli_query($mysqli, "INSERT INTO product (name, description, img, price, stock) VALUES ('McLaren MP4/7A', 'best cars much wow', 'https://image.ibb.co/jTEH0S/default.png', 10000, 4)");
     mysqli_query($mysqli, "INSERT INTO product (name, description, img, price, stock) VALUES ('McLaren MP4/8', 'best cars much wow', 'https://image.ibb.co/jTEH0S/default.png', 10000, 4)");
     mysqli_query($mysqli, "INSERT INTO product (name, description, img, price, stock) VALUES ('McLaren MP4/8', 'best cars much wow', 'https://image.ibb.co/jTEH0S/default.png', 10000, 4)");
 
 
-    mysqli_query($mysqli, "INSERT INTO user (login, passwd, first_name, last_name) VALUES ('admin', '" . hash('whirlpool', 'admin') . "', 'admin', 'admin')");
-    mysqli_query($mysqli, "INSERT INTO user (login, passwd, first_name, last_name) VALUES ('test', '" . hash('whirlpool', 'test') . "', 'test', 'test')");
+    mysqli_query($mysqli, "INSERT INTO user (passwd, fname, lname, email, address, city, postal_code, phone) VALUES ('" . hash('whirlpool', 'admin') . "', 'admin', 'admin', 'admin', 'admin', 'admin', 'admin', 'admin')");
+    mysqli_query($mysqli, "INSERT INTO user (passwd, fname, lname, email, address, city, postal_code, phone) VALUES ('test', '" . hash('whirlpool', 'test') . "', 'test', 'test', 'test', 'test', 'test', 'test', 'test')");
     mysqli_close($mysqli);
     echo "<h1>Installation Done</h1>";
 ?>

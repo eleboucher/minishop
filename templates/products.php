@@ -1,7 +1,7 @@
 <?php
     include ("../handle_db.php");
     $ret = query("SELECT * FROM `product`");
-    
+
     if (mysqli_num_rows($ret) > 0) {
         echo "<ul>";
         while($row = mysqli_fetch_assoc($ret)) {
@@ -15,7 +15,6 @@
                 </li>
 EOL;
         }
-        echo "<ul>";    
+        echo "<ul>";
     }
-
 ?>
