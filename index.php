@@ -1,3 +1,5 @@
 <?php
-    echo "<h1>Hello World</h1>"
+    include ('public/head.php');
+    echo get_head("index");
+    
 ?>
