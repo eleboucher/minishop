@@ -10,7 +10,7 @@ if ($_POST['submit'] === "Delete")
     $delete = "DELETE FROM `user` WHERE email = '$_SESSION[user_email]'";
     query($delete);
     $_SESSION["user"] = NULL;
-    header("Location: index.php");
+    //header("Location: index.php");
   }
 }
 ?>
