@@ -45,7 +45,7 @@
 
     $order_creation = "CREATE TABLE `order` (
         `id` INT NOT NULL AUTO_INCREMENT,
-        `customer_id` INT NOT NULL,
+        `user_id` INT NOT NULL,
         `date` DATETIME DEFAULT CURRENT_TIMESTAMP,
         PRIMARY KEY (`id`)
     )";
@@ -66,13 +66,13 @@
     mysqli_query($mysqli, "ALTER TABLE `order_item` ADD CONSTRAINT `order_item_fk0` FOREIGN KEY (`order_id`) REFERENCES `order`(`id`)");
     mysqli_query($mysqli, "ALTER TABLE `order_item` ADD CONSTRAINT `order_item_fk1` FOREIGN KEY (`product_id`) REFERENCES `product`(`id`)");
 
-    mysqli_query($mysqli, "INSERT INTO product (name, description, img, price, stock) VALUES ('McLaren MP4/3', 'best cars much wow', 'https://image.ibb.co/jTEH0S/default.png', 10000, 4)"); 
-    mysqli_query($mysqli, "INSERT INTO product (name, description, img, price, stock) VALUES ('McLaren MP4/4', 'best cars much wow', 'https://image.ibb.co/jTEH0S/default.png', 10000, 4)");
-    mysqli_query($mysqli, "INSERT INTO product (name, description, img, price, stock) VALUES ('McLaren MP4/5, 'best cars much wow', 'https://image.ibb.co/jTEH0S/default.png', 10000, 4)");
-    mysqli_query($mysqli, "INSERT INTO product (name, description, img, price, stock) VALUES ('McLaren MP4/6', 'best cars much wow', 'https://image.ibb.co/jTEH0S/default.png', 10000, 4)");
-    mysqli_query($mysqli, "INSERT INTO product (name, description, img, price, stock) VALUES ('McLaren MP4/7A', 'best cars much wow', 'https://image.ibb.co/jTEH0S/default.png', 10000, 4)");
-    mysqli_query($mysqli, "INSERT INTO product (name, description, img, price, stock) VALUES ('McLaren MP4/8', 'best cars much wow', 'https://image.ibb.co/jTEH0S/default.png', 10000, 4)");
-    mysqli_query($mysqli, "INSERT INTO product (name, description, img, price, stock) VALUES ('McLaren MP4/8', 'best cars much wow', 'https://image.ibb.co/jTEH0S/default.png', 10000, 4)");
+    mysqli_query($mysqli, "INSERT INTO product (name, description, img, price, stock) VALUES ('McLaren MP4/3', 'best cars much wow', 'https://cdn-8.motorsport.com/images/mgl/0oKPyrw0/s8/f1-hungarian-gp-1987-alain-prost-mclaren-mp4-3-tag-porsche.jpg', 10000, 4)"); 
+    mysqli_query($mysqli, "INSERT INTO product (name, description, img, price, stock) VALUES ('McLaren MP4/4', 'best cars much wow', 'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/gettyimages-811385962-1510339287.jpg', 10000, 4)");
+    mysqli_query($mysqli, "INSERT INTO product (name, description, img, price, stock) VALUES ('McLaren MP4/5, 'best cars much wow', 'http://www.statsf1.com/constructeurs/photos/68/116.jpg', 10000, 4)");
+    mysqli_query($mysqli, "INSERT INTO product (name, description, img, price, stock) VALUES ('McLaren MP4/6', 'best cars much wow', 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Ayrton_Senna_1991_Monaco.jpg/310px-Ayrton_Senna_1991_Monaco.jpg', 10000, 4)");
+    mysqli_query($mysqli, "INSERT INTO product (name, description, img, price, stock) VALUES ('McLaren MP4/7A', 'best cars much wow', 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/McLaren_MP4-7_left_Honda_Collection_Hall.jpg/1200px-McLaren_MP4-7_left_Honda_Collection_Hall.jpg', 10000, 4)");
+    mysqli_query($mysqli, "INSERT INTO product (name, description, img, price, stock) VALUES ('McLaren MP4/8', 'best cars much wow', 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Senna%27s_McLaren_MP4-8.jpg/1200px-Senna%27s_McLaren_MP4-8.jpg', 10000, 4)");
+    mysqli_query($mysqli, "INSERT INTO product (name, description, img, price, stock) VALUES ('McLaren MCL32', 'best cars much wow', 'https://photos2.tf1.fr/660/370/mclaren-f1-mcl32-1-458395-0@1x.jpg', 10000, 4)");
 
     mysqli_query($mysqli, "INSERT INTO user (login, passwd, first_name, last_name) VALUES ('admin', '" . hash('whirlpool', 'admin') . "', 'admin', 'admin')");
     mysqli_query($mysqli, "INSERT INTO user (login, passwd, first_name, last_name) VALUES ('test', '" . hash('whirlpool', 'test') . "', 'test', 'test')");
