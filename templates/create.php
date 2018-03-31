@@ -23,6 +23,6 @@
 </form>
 
 <form method="post" action="../delete.php" id="delete">
-  <p>Pour supprimer votre compte actuel, rentrez "Supprimer" dans le champ ci-dessous</p>
-  <input type="submit" class="submit" name="delete" value="Delete"/>
+  <p>Pour supprimer votre compte actuel, appuyez sur le bouton ci-dessous</p>
+  <input type="submit" class="submit" name="submit" value="Delete"/>
 </form>

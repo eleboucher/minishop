@@ -23,6 +23,7 @@ $ret = connexion($email, $hash_passwd);
 if ($ret === TRUE)
   {
     $_SESSION["logged_in"] = TRUE;
+    $_SESSION["user_email"] = $_POST["email"];
     echo "Connexion réussie. Bienvenue !\n";
     //header("Location: index.html");
   }
