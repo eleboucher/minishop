@@ -25,7 +25,7 @@ if ($ret === TRUE)
     $_SESSION["logged_in"] = TRUE;
     $_SESSION["user_email"] = $_POST["email"];
     echo "Connexion réussie. Bienvenue !\n";
-    header("Location: index.php");
+    //header("Location: index.php");
   }
 else
   echo "L'email ou le mot de passe est incorrect.\n";
