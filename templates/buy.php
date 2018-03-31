@@ -10,8 +10,7 @@
             query("INSERT INTO `order_item` (`order_id`, `product_id`, `quantity`) VALUES ((SELECT order.id FROM `order` WHERE ( `date` = '$timestamp' AND `user_id` = '$_SESSION[login_id]' ) limit 1), $prod[id], $prod[quantity])");
         }
     }
-    else
-    {
+    else{
         echo "Vous devez etre connecté pour pouvoir commander!";
     }
 ?>

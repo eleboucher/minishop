@@ -1,7 +1,6 @@
 <?php
-    include ("../handle_db.php");
-    function get_allproducts()
-    {
+    include ("handle_db.php");
+
         $ret = query("SELECT * FROM `product`");
         
         if (mysqli_num_rows($ret) > 0) {
@@ -9,7 +8,7 @@
             while($row = mysqli_fetch_assoc($ret)) {
                 echo <<<EOL
                     <li>
-                        <img src="$row[img]"></img>
+                        <img src="$row[img]" width="50vw" height="50vw" alt="$row[name]"></img>
                         <h5>$row[name]</h5>
                         <p>$row[description]</p>
                         <p>$row[price]<p>
@@ -19,6 +18,5 @@ EOL;
             }
             echo "<ul>";    
         }
-    }
-    get_allproducts();
+
 ?>

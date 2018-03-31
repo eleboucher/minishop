@@ -43,8 +43,6 @@
                             <form type="get">
                                 <button type="submit" name="del" value="$id[id]"/>Supprimer</button>
                             </form>
-                           
-
                         </li>
 EOL;
                 }
