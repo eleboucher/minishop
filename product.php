@@ -6,7 +6,7 @@
     <body>
         <?php include("templates/navbar.php")?>
         
-        <div>
+        <div class="shopping-list">
             <?php include("templates/products.php")?>
         </div>
     </body>

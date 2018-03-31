@@ -1,3 +1,7 @@
+* {
+    box-sizing: border-box;
+}
+
 nav ul {
     list-style-type: none;
     margin: 0;
@@ -20,4 +24,119 @@ nav li a {
 
 nav li a:hover {
     background-color: #111;
+}
+
+.shopping-cart {
+    background: #FFFFFF;
+    box-shadow: 1px 2px 3px 0px rgba(0,0,0,0.10);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+.item {
+    margin: 0;
+    padding: 20px 30px;
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-top:  1px solid #E1E8EE;
+    border-bottom:  1px solid #E1E8EE;
+    
+}
+
+.image {
+    margin-right: 50px;
+}
+
+.image img{
+    margin: auto;
+    height: 100%;
+    width: 120px;
+    display:block; 
+}
+
+.description {
+    padding-top: 10px;
+    margin-right: 60px;
+    width: 115px;
+}
+
+.description span {
+    display: block;
+    font-size: 14px;
+    color: #43484D;
+    font-weight: 400;
+}
+
+.description span:first-child {
+    margin-bottom: 5px;
+}
+
+.description span:last-child {
+    font-weight: 300;
+    margin-top: 8px;
+    color: #86939E;
+}
+
+.total-price {
+    padding-left:40px;
+    padding-top: 27px;
+    font-size: 16px;
+    color: #43484D;
+    font-weight: 300;   
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.button {
+    float: right;
+    margin-left: auto;
+    flex-direction: column;
+    position: relative;
+}
+
+.form1{
+    float: left
+}
+.buy {
+    border-radius: 5px;
+    padding: 0px 10px;
+    font-size: 22px;
+    text-decoration: none;
+    position: relative;
+    display: inline-block;
+    background-color: #03a9f4;
+}
+.buy:hover {
+    background-color: #4fc3f7;
+}
+
+@media (max-width: 800px) {
+    .shopping-cart {
+        width: 100%;
+        height: auto;
+        overflow: hidden;
+    }
+    .item {
+        height: auto;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    .image img {
+        width: 50%;
+    }
+    .image,
+    .quantity,
+    .description {
+        width: 100%;
+        text-align: center;
+        margin: 6px 0;
+    }
+    .buttons {
+        margin-right: 20px;
+    }
 }

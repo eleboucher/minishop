@@ -30,10 +30,10 @@ if ($_POST['submit'] === "Change" && check_error_form_change() === TRUE)
   $email = $_POST['email'];
   $address = $_POST['address'];
   $city = $_POST['city'];
-  $change = "UPDATE `user` SET fname = $fname WHERE email = '$_SESSION['user_email']'";
-  //$change = "UPDATE `user` SET fname = $fname, lname = $lname, email = $email, address = $address, city = $city WHERE email = '$_SESSION['user_email']'";
+ // $change = "UPDATE `user` SET fname = $fname WHERE email = '$_SESSION[user_email]'";
+  $change = "UPDATE `user` SET fname = $fname, lname = $lname, email = $email, address = $address, city = $city WHERE email = '$_SESSION[user_email]'";
   query($change);
-  echo "Votre compte a été modifié"
+  echo "Votre compte a été modifié";
 }
 if ($_SESSION["logged_in"] === TRUE)
 {
