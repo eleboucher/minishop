@@ -20,13 +20,14 @@ function connexion($email, $hash_passwd)
 
 if (isset($_POST['submit']) && $_POST['submit'] === "Login")
 {
-    $email = $_POST["email"];
-    $hash_passwd = hash("whirlpool", $_POST["passwd"]);
+    $email = mysql_real_escape_string($_POST["email"]);
+    $passwd = mysql_real_escape_string($_POST["passwd"]);
+    $hash_passwd = hash("whirlpool", $passwd);
     $ret = connexion($email, $hash_passwd);
     if ($ret !== FALSE)
     {
         $_SESSION["logged_in"] = TRUE;
-        $_SESSION["user_email"] = $_POST["email"];
+        $_SESSION["user_email"] = $email;
         $_SESSION['login_id'] = $ret;
         echo "Connexion réussie. Bienvenue !\n";
         header("Location: index.php");
