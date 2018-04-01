@@ -8,13 +8,13 @@ if(!isset($_SESSION))
 function check_error_form()
 {
   $error = TRUE;
-  $email = mysql_real_escape_string($_POST['email']);
-  $passwd = mysql_real_escape_string($_POST['passwd']);
-  $address = mysql_real_escape_string($_POST['address']);
-  $postal_code = mysql_real_escape_string($_POST['postal_code']);
-  $phone = mysql_real_escape_string($_POST['phone']);
-  $fname = mysql_real_escape_string($_POST['fname']);
-  $lname = mysql_real_escape_string($_POST['lname']);
+  $email = mysqli_real_escape_string($_POST['email']);
+  $passwd = mysqli_real_escape_string($_POST['passwd']);
+  $address = mysqli_real_escape_string($_POST['address']);
+  $postal_code = mysqli_real_escape_string($_POST['postal_code']);
+  $phone = mysqli_real_escape_string($_POST['phone']);
+  $fname = mysqli_real_escape_string($_POST['fname']);
+  $lname = mysqli_real_escape_string($_POST['lname']);
   if (preg_match("/^.+@.+\..+$/", $email) == FALSE) {
     $error = "L'adresse email n'est pas valide.";
     return ($error);
@@ -60,14 +60,14 @@ if (isset($_POST['submit']) && $_POST['submit'] === "Submit")
   $error = check_error_form();
   {
     if (isset($error) && $error === TRUE) {
-      $email = mysql_real_escape_string($_POST['email']);
-      $passwd = mysql_real_escape_string($_POST['passwd']);
-      $address = mysql_real_escape_string($_POST['address']);
-      $postal_code = mysql_real_escape_string($_POST['postal_code']);
-      $phone = mysql_real_escape_string($_POST['phone']);
-      $fname = mysql_real_escape_string($_POST['fname']);
-      $lname = mysql_real_escape_string($_POST['lname']);
-      $city = mysql_real_escape_string($_POST['city']);
+      $email = mysqli_real_escape_string($_POST['email']);
+      $passwd = mysqli_real_escape_string($_POST['passwd']);
+      $address = mysqli_real_escape_string($_POST['address']);
+      $postal_code = mysqli_real_escape_string($_POST['postal_code']);
+      $phone = mysqli_real_escape_string($_POST['phone']);
+      $fname = mysqli_real_escape_string($_POST['fname']);
+      $lname = mysqli_real_escape_string($_POST['lname']);
+      $city = mysqli_real_escape_string($_POST['city']);
       $query = "INSERT INTO `user` (passwd, fname, lname, email, address, city, postal_code, phone) VALUES ('" . hash('whirlpool', $passwd) . "', '$fname', '$lname', '$email', '$address', '$city', '$postal_code', '$phone')";
       query($query);
       echo "Votre compte a été créé avec succès.\n";

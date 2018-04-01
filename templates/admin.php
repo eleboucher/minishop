@@ -10,11 +10,11 @@ if (isset($_POST['submit']) && $_POST['submit'] === "Ajouter un produit") {
         echo "Tous les champs doivent être remplis.\n";
     }
     else {
-        $name = mysql_real_escape_string($_POST['name']);
-        $description = mysql_real_escape_string($_POST['description']);
-        $img = mysql_real_escape_string($_POST['img']);
-        $price = mysql_real_escape_string($_POST['price']);
-        $stock = mysql_real_escape_string($_POST['stock']);
+        $name = escape_string($_POST['name']);
+        $description = escape_string($_POST['description']);
+        $img = escape_string($_POST['img']);
+        $price = escape_string($_POST['price']);
+        $stock = escape_string($_POST['stock']);
         query("INSERT INTO product (name, description, img, price, stock) VALUES ('$name', '$description', '$img', '$price', '$stock')");
     }
 }
@@ -25,17 +25,17 @@ if (isset($_POST['submit']) && $_POST['submit'] == "Modifier le produit") {
         echo "Tous les champs doivent être remplis.\n";
     }
     else {
-        $name = mysql_real_escape_string($_POST['name']);
-        $description = mysql_real_escape_string($_POST['description']);
-        $img = mysql_real_escape_string($_POST['img']);
-        $price = mysql_real_escape_string($_POST['price']);
-        $stock = mysql_real_escape_string($_POST['stock']);
+        $name = escape_string($_POST['name']);
+        $description = escape_string($_POST['description']);
+        $img = escape_string($_POST['img']);
+        $price = escape_string($_POST['price']);
+        $stock = escape_string($_POST['stock']);
         query("UPDATE `product` SET name = '$name', description = '$description', img = '$img', price = '$price', stock = '$stock' WHERE name = '$_POST[product]'");
     }
 }
 
 if (isset($_POST['submit']) && $_POST['submit'] == "Supprimer le produit") {
-        $name = mysql_real_escape_string($_POST['name']);
+        $name = escape_string($_POST['name']);
         query("DELETE FROM product WHERE name = '$name'");
 }
 
@@ -44,7 +44,7 @@ if (isset($_POST['submit']) && $_POST['submit'] === "Ajouter une catégorie") {
         echo "Le champ doit être rempli.\n";
     }
     else {
-        $name = mysql_real_escape_string($_POST['name']);
+        $name = escape_string($_POST['name']);
         query("INSERT INTO category (name) VALUES ('$name')");
     }
 }
@@ -54,33 +54,33 @@ if (isset($_POST['submit']) && $_POST['submit'] === "Modifier la catégorie") {
         echo "Le champ doit être rempli.\n";
     }
     else {
-        $newname = mysql_real_escape_string($_POST['newname']);
-        $name = mysql_real_escape_string($_POST['name']);
+        $newname = escape_string($_POST['newname']);
+        $name = escape_string($_POST['name']);
         query("UPDATE `category` SET name = '$newname' WHERE name = '$name'");
     }
 }
 
 if (isset($_POST['submit']) && $_POST['submit'] === "Lier une categorie") {
-    $category = mysql_real_escape_string($_POST['category']);
-    $product = mysql_real_escape_string($_POST['product']);
+    $category = escape_string($_POST['category']);
+    $product = escape_string($_POST['product']);
     query("REPLACE INTO category_map (category_id, product_id) VALUE ((SELECT id from category where name = '$category'), (select id from product where name = '$product')) ");
 }
 
 if (isset($_POST['submit']) && $_POST['submit'] == "Supprimer la categorie") {
-    $name = mysql_real_escape_string($_POST['name']);
+    $name = escape_string($_POST['name']);
     query("DELETE FROM category WHERE name = '$name'");
 }
 
 function check_error_form()
 {
   $error = TRUE;
-  $email = mysql_real_escape_string($_POST['email']);
-  $passwd = mysql_real_escape_string($_POST['passwd']);
-  $address = mysql_real_escape_string($_POST['address']);
-  $postal_code = mysql_real_escape_string($_POST['postal_code']);
-  $phone = mysql_real_escape_string($_POST['phone']);
-  $fname = mysql_real_escape_string($_POST['fname']);
-  $lname = mysql_real_escape_string($_POST['lname']);
+  $email = escape_string($_POST['email']);
+  $passwd = escape_string($_POST['passwd']);
+  $address = escape_string($_POST['address']);
+  $postal_code = escape_string($_POST['postal_code']);
+  $phone = escape_string($_POST['phone']);
+  $fname = escape_string($_POST['fname']);
+  $lname = escape_string($_POST['lname']);
   if (preg_match("/^.+@.+\..+$/", $email) == FALSE && $email !== 'admin') {
     $error = "L'adresse email n'est pas valide.";
     return ($error);
@@ -126,14 +126,14 @@ if (isset($_POST['submit']) && $_POST['submit'] === "Ajouter un compte")
   $error = check_error_form();
   {
     if (isset($error) && $error === TRUE) {
-      $email = mysql_real_escape_string($_POST['email']);
-      $passwd = mysql_real_escape_string($_POST['passwd']);
-      $address = mysql_real_escape_string($_POST['address']);
-      $postal_code = mysql_real_escape_string($_POST['postal_code']);
-      $phone = mysql_real_escape_string($_POST['phone']);
-      $fname = mysql_real_escape_string($_POST['fname']);
-      $lname = mysql_real_escape_string($_POST['lname']);
-      $city = mysql_real_escape_string($_POST['city']);
+      $email = escape_string($_POST['email']);
+      $passwd = escape_string($_POST['passwd']);
+      $address = escape_string($_POST['address']);
+      $postal_code = escape_string($_POST['postal_code']);
+      $phone = escape_string($_POST['phone']);
+      $fname = escape_string($_POST['fname']);
+      $lname = escape_string($_POST['lname']);
+      $city = escape_string($_POST['city']);
       $query = "INSERT INTO `user` (passwd, fname, lname, email, address, city, postal_code, phone) VALUES ('" . hash('whirlpool', $passwd) . "', '$fname', '$lname', '$email', '$address', '$city', '$postal_code', '$phone')";
       query($query);
     }
@@ -146,14 +146,14 @@ if (isset($_POST['submit']) && $_POST['submit'] === "Ajouter un compte")
 function check_error_form_change($check_pw)
 {
   $error = TRUE;
-  $email = mysql_real_escape_string($_POST['email']);
-  $oldpw = mysql_real_escape_string($_POST['oldpw']);
-  $newpw = mysql_real_escape_string($_POST['newpw']);
-  $address = mysql_real_escape_string($_POST['address']);
-  $postal_code = mysql_real_escape_string($_POST['postal_code']);
-  $phone = mysql_real_escape_string($_POST['phone']);
-  $fname = mysql_real_escape_string($_POST['fname']);
-  $lname = mysql_real_escape_string($_POST['lname']);
+  $email = escape_string($_POST['email']);
+  $oldpw = escape_string($_POST['oldpw']);
+  $newpw = escape_string($_POST['newpw']);
+  $address = escape_string($_POST['address']);
+  $postal_code = escape_string($_POST['postal_code']);
+  $phone = escape_string($_POST['phone']);
+  $fname = escape_string($_POST['fname']);
+  $lname = escape_string($_POST['lname']);
   if (!isset($fname) || !isset($lname) || !isset($email)
   || !isset($oldpw) || $fname === "" || $lname === "" || $email === "" || $oldpw === ""){
     $error = "Tous les champs obligatoires doivent être remplis.";
@@ -193,34 +193,34 @@ function check_error_form_change($check_pw)
 }
 if (isset($_POST['submit']) && $_POST['submit'] == "Modifier le compte")
 {
-  $email = mysql_real_escape_string($_POST['email']);
+  $email = escape_string($_POST['email']);
   $query = query("SELECT passwd FROM `user` WHERE email = '$email'");
   if (mysqli_num_rows($query) > 0)
     $check_pw = mysqli_fetch_assoc($query);
   $error = check_error_form_change($check_pw);
   if ($error === TRUE)
   {
-    $email = mysql_real_escape_string($_POST['email']);
-    $fname = mysql_real_escape_string($_POST['fname']);
-    $lname = mysql_real_escape_string($_POST['lname']);
+    $email = escape_string($_POST['email']);
+    $fname = escape_string($_POST['fname']);
+    $lname = escape_string($_POST['lname']);
     if (isset($oldpw))
-      $oldpw = mysql_real_escape_string($_POST['oldpw']);
+      $oldpw = escape_string($_POST['oldpw']);
     if (isset($newpw))
-      $newpw = mysql_real_escape_string($_POST['newpw']);
-    $address = mysql_real_escape_string($_POST['address']);
-    $city = mysql_real_escape_string($_POST['city']);
-    $postal_code = mysql_real_escape_string($_POST['postal_code']);
-    $phone = mysql_real_escape_string($_POST['phone']);
+      $newpw = escape_string($_POST['newpw']);
+    $address = escape_string($_POST['address']);
+    $city = escape_string($_POST['city']);
+    $postal_code = escape_string($_POST['postal_code']);
+    $phone = escape_string($_POST['phone']);
     $change = "UPDATE `user` SET passwd ='" . hash('whirlpool', $newpw) . "', fname = '$fname', lname = '$lname', email = '$email', address = '$address', city = '$city', postal_code = '$postal_code', phone = '$phone' WHERE email = '$_SESSION[user_email]'";
     query($change);
-    $_SESSION['user_email'] = mysql_real_escape_string($_POST['email']);
+    $_SESSION['user_email'] = escape_string($_POST['email']);
   }
   else
     echo $error."\n";
 }
 
 if (isset($_POST['submit']) && $_POST['submit'] == "Supprimer le compte") {
-    $lname = mysql_real_escape_string($_POST['lname']);
+    $lname = escape_string($_POST['lname']);
     query("DELETE FROM user WHERE lname = '$lname'");
 }
 
@@ -252,7 +252,7 @@ if (isset($_POST['submit']) && $_POST['submit'] == "Supprimer le compte") {
 EOL;
     if (mysqli_num_rows($ret) > 0) {
         while($row = mysqli_fetch_assoc($ret)) {
-          $product = mysql_real_escape_string($_POST['product']);
+          $product = escape_string($_POST['product']);
            if (isset($product) && $row["name"] == $product)
            {
             echo <<<EOL
@@ -272,8 +272,9 @@ EOL;
 EOL;
 ?>
 <?php
-        $product = mysql_real_escape_string($_POST['product']);
-        if (isset($product)){
+        
+        if (isset($_POST['product'])){
+        $product = escape_string($_POST['product']);
         $ret = query("SELECT * FROM `product` WHERE name = '$product'");
           if (mysqli_num_rows($ret) > 0) {
             while($row = mysqli_fetch_assoc($ret)) {
@@ -381,7 +382,7 @@ EOL;
 EOL;
     if (mysqli_num_rows($ret) > 0) {
         while($row = mysqli_fetch_assoc($ret)) {
-          $category = mysql_real_escape_string($_POST['category']);            
+          $category = escape_string($_POST['category']);            
            if (isset($category) && $row["name"] == $category)
            {
             echo <<<EOL
@@ -401,8 +402,9 @@ EOL;
 EOL;
 ?>
 <?php
-        $category = mysql_real_escape_string($_POST['category']);            
-        if (isset($category)){
+               
+        if (isset($_POST['category'])){
+        $category = escape_string($_POST['category']);     
         $ret = query("SELECT * FROM `category` WHERE name = '$category'");
           if (mysqli_num_rows($ret) > 0) {
             while($row = mysqli_fetch_assoc($ret)) {
@@ -486,8 +488,9 @@ EOL;
 EOL;
 ?>
 <?php
-    $email = mysql_real_escape_string($_POST['email']);            
-    if (isset($email) && $email !== "")
+             
+    if (isset($_POST['email']) && $_POST['email'] !== ""){
+    $email = escape_string($_POST['email']);   
         $ret = query("SELECT * FROM `user` WHERE email = '$email'");
           if (mysqli_num_rows($ret) > 0) {
             while($row = mysqli_fetch_assoc($ret)) {
@@ -506,6 +509,7 @@ EOL;
 EOL;
            }
         }
+      }
 ?>
   </fieldset>
 </form>

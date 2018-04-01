@@ -20,8 +20,8 @@ function connexion($email, $hash_passwd)
 
 if (isset($_POST['submit']) && $_POST['submit'] === "Login")
 {
-    $email = mysql_real_escape_string($_POST["email"]);
-    $passwd = mysql_real_escape_string($_POST["passwd"]);
+    $email = escape_string($_POST["email"]);
+    $passwd = escape_string($_POST["passwd"]);
     $hash_passwd = hash("whirlpool", $passwd);
     $ret = connexion($email, $hash_passwd);
     if ($ret !== FALSE)
