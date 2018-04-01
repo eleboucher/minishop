@@ -59,6 +59,10 @@ if (isset($_GET['submit']) && $_GET['submit'] === "Modifier une catégorie") {
     }
 }
 
+if (isset($_GET['submit']) && $_GET['submit'] === "Lier une categorie") {
+
+    query("REPLACE INTO category_map (product_id, category_id) VALUE ((SELECT id from category where name = '$_GET[category]'), (select id from product where name = '$_GET[product]')) ");
+}
 function check_error_form()
 {
   $error = TRUE;
@@ -285,7 +289,7 @@ EOL;
 </form>
 
 
-<form method="get" id="change_category">
+<form method="get" id="link_category">
   <fieldset>
   <?php      
     $ret = query("SELECT name FROM `category`");
@@ -301,12 +305,29 @@ EOL;
 EOL;
         }
     }
+    $ret = query("SELECT name FROM `product`");
     echo <<<EOL
-    <input type='submit' name='submit' value="valider"/>
+        </select>
+        <select name="product">
+            <option value="all">Aucune</option>
+EOL;
+    if (mysqli_num_rows($ret) > 0) {
+        while($row = mysqli_fetch_assoc($ret)) {
+            echo <<<EOL
+            <option value="$row[name]">$row[name]</option>
+EOL;
+        }
+    }
+    echo <<<EOL
+    <input type='submit' name='submit' value="Lier une categorie"/>
     </select>
     </form>
 EOL;
 ?>
+  </fieldset>
+</form>
+<form method="get" id="change_category">
+  <fieldset>
 <?php
         if (isset($_GET["category"])){
         $ret = query("SELECT * FROM `category` WHERE name = '$_GET[category]'");

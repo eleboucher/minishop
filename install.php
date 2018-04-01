@@ -1,5 +1,5 @@
 <?php
-    $mysqli = mysqli_connect("localhost", "root", "berni196742");
+    $mysqli = mysqli_connect("localhost", "root", "azerty");
 
     if (mysqli_connect_errno($mysqli)) {
         echo "Echec lors de la connexion à MySQL : " . mysqli_connect_error();
@@ -63,8 +63,8 @@
         PRIMARY KEY (`id`)
     )";
     mysqli_query($mysqli, $order_item_creation);
-    mysqli_query($mysqli, "ALTER TABLE `category_map` ADD CONSTRAINT `category_map_fk0` FOREIGN KEY (`product_id`) REFERENCES `product`(`id`) ON UPDATE CASCADE ON DELETE CASCADE");
-    mysqli_query($mysqli, "ALTER TABLE `category_map` ADD CONSTRAINT `category_map_fk1` FOREIGN KEY (`category_id`) REFERENCES `category`(`id`) ON UPDATE CASCADE ON DELETE CASCADE");
+    mysqli_query($mysqli, "ALTER TABLE `category_map` ADD CONSTRAINT `category_map_fk0` FOREIGN KEY (`product_id`) REFERENCES `product`(`id`)  ON DELETE CASCADE");
+    mysqli_query($mysqli, "ALTER TABLE `category_map` ADD CONSTRAINT `category_map_fk1` FOREIGN KEY (`category_id`) REFERENCES `category`(`id`)  ON DELETE CASCADE");
     mysqli_query($mysqli, "ALTER TABLE `order` ADD CONSTRAINT `order_fk0` FOREIGN KEY (`user_id`) REFERENCES `user`(`id`) ON UPDATE CASCADE ON DELETE CASCADE");
     mysqli_query($mysqli, "ALTER TABLE `order_item` ADD CONSTRAINT `order_item_fk0` FOREIGN KEY (`order_id`) REFERENCES `order`(`id`) ON UPDATE CASCADE ON DELETE CASCADE");
     mysqli_query($mysqli, "ALTER TABLE `order_item` ADD CONSTRAINT `order_item_fk1` FOREIGN KEY (`product_id`) REFERENCES `product`(`id`) ON UPDATE CASCADE ON DELETE CASCADE");
