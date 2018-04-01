@@ -1,7 +1,8 @@
 <?php
 include_once ("ressources/handle_db.php");
-if (!isset($_SESSION))
+if (!isset($_SESSION)) {
     session_start();
+}
 function check_error_form_change($check_pw)
 {
   $error = TRUE;

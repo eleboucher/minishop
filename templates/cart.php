@@ -1,8 +1,8 @@
 <?php
 include_once ("ressources/handle_db.php");
-if(!isset($_SESSION))
+if(!isset($_SESSION)) {
     session_start(); 
-
+}
     function remove_prod($id)
     {
         echo $id."\n";
