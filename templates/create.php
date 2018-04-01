@@ -8,39 +8,46 @@ if(!isset($_SESSION))
 function check_error_form()
 {
   $error = TRUE;
-  if (preg_match("/^.+@.+\..+$/", $_POST['email']) == FALSE) {
+  $email = mysql_real_escape_string($_POST['email']);
+  $passwd = mysql_real_escape_string($_POST['passwd']);
+  $address = mysql_real_escape_string($_POST['address']);
+  $postal_code = mysql_real_escape_string($_POST['postal_code']);
+  $phone = mysql_real_escape_string($_POST['phone']);
+  $fname = mysql_real_escape_string($_POST['fname']);
+  $lname = mysql_real_escape_string($_POST['lname']);
+  if (preg_match("/^.+@.+\..+$/", $email) == FALSE) {
     $error = "L'adresse email n'est pas valide.";
     return ($error);
   }
-  else if (strlen($_POST['passwd']) < 5) {
+  else if (strlen($passwd) < 5) {
     $error = "Le mot de passe doit faire au moins 5 caractères.";
     return ($error);
   }
-  else if (preg_match('~[0-9]+~', $_POST['passwd']) == FALSE) {
+  else if (preg_match('~[0-9]+~', $passwd) == FALSE) {
     $error = "Le mot de passe doit comporter au moins un chiffre.";
     return ($error);
   }
-  else if (preg_match("/^[0-9]+\s+.+\s+.+\s?$/", $_POST['address']) == FALSE) {
+  else if (preg_match("/^[0-9]+\s+.+\s+.+\s?$/", $address) == FALSE) {
     $error = "L'adresse n'est pas valide.";
     return ($error);
   }
-  else if (preg_match("/^[0-9]{5}$/", $_POST['postal_code']) == FALSE) {
+  else if (preg_match("/^[0-9]{5}$/", $postal_code) == FALSE) {
     $error = "Le code postal n'est pas valide.";
     return ($error);
   }
-  else if (preg_match("/^\+?[0-9]+$/", $_POST['phone']) == FALSE) {
+  else if (preg_match("/^\+?[0-9]+$/", $phone) == FALSE) {
     $error = "Le numéro de téléphone n'est pas valide.";
     return ($error);
   }
-  if (!isset($_POST['fname']) || !isset($_POST['lname']) || !isset($_POST['email'])
-  || !isset($_POST['passwd']) || $_POST['fname'] === "" || $_POST['lname'] === "" || $_POST['email'] === "" || $_POST['passwd'] === ""){
+  if (!isset($fname) || !isset($lname) || !isset($email)
+  || !isset($passwd) || $fname === "" || $lname === "" || $email === "" || $passwd === ""){
     $error = "Tous les champs obligatoires doivent être remplis.";
     return ($error);
   }
   $ret = query("SELECT * FROM `user`");
   while ($row = mysqli_fetch_assoc($ret))
   {
-    if ($row['email'] === $_POST['email']) {
+    if ($row['email'] === $email) {
       $error = "L'adresse email fournie est déjà utilisée par un autre compte.";
       return ($error);
     }
@@ -53,7 +60,15 @@ if (isset($_POST['submit']) && $_POST['submit'] === "Submit")
   $error = check_error_form();
   {
     if (isset($error) && $error === TRUE) {
-      $query = "INSERT INTO `user` (passwd, fname, lname, email, address, city, postal_code, phone) VALUES ('" . hash('whirlpool', $_POST['passwd']) . "', '{$_POST['fname']}', '{$_POST['lname']}', '{$_POST['email']}', '{$_POST['address']}', '{$_POST['city']}', '{$_POST['postal_code']}', '{$_POST['phone']}')";
+      $email = mysql_real_escape_string($_POST['email']);
+      $passwd = mysql_real_escape_string($_POST['passwd']);
+      $address = mysql_real_escape_string($_POST['address']);
+      $postal_code = mysql_real_escape_string($_POST['postal_code']);
+      $phone = mysql_real_escape_string($_POST['phone']);
+      $fname = mysql_real_escape_string($_POST['fname']);
+      $lname = mysql_real_escape_string($_POST['lname']);
+      $city = mysql_real_escape_string($_POST['city']);
+      $query = "INSERT INTO `user` (passwd, fname, lname, email, address, city, postal_code, phone) VALUES ('" . hash('whirlpool', $passwd) . "', '$fname', '$lname', '$email', '$address', '$city', '$postal_code', '$phone')";
       query($query);
       echo "Votre compte a été créé avec succès.\n";
       //header("Location: index.php");
