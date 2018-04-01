@@ -48,21 +48,19 @@ if (isset($_POST['submit']) && $_POST['submit'] === "Ajouter une catégorie") {
     }
 }
 
-if (isset($_GET['submit']) && $_GET['submit'] === "Modifier une catégorie") {
+if (isset($_GET['submit']) && $_GET['submit'] === "Modifier la catégorie") {
     if (!isset($_GET['name']) || $_GET['name'] === "" || !isset($_GET['newname']) || $_GET['newname'] === "") {
         echo "Le champ doit être rempli.\n";
     }
     else {
-        $name = $_GET['newname'];
-        echo $name;
-        query("UPDATE `category` SET name = '$name' WHERE name = '$_GET[name]'");
+        query("UPDATE `category` SET name = '$_GET[newname]' WHERE name = '$_GET[name]'");
     }
 }
 
 if (isset($_GET['submit']) && $_GET['submit'] === "Lier une categorie") {
-
-    query("REPLACE INTO category_map (product_id, category_id) VALUE ((SELECT id from category where name = '$_GET[category]'), (select id from product where name = '$_GET[product]')) ");
+    query("REPLACE INTO category_map (category_id, product_id) VALUE ((SELECT id from category where name = '$_GET[category]'), (select id from product where name = '$_GET[product]')) ");
 }
+
 function check_error_form()
 {
   $error = TRUE;
@@ -328,13 +326,42 @@ EOL;
 </form>
 <form method="get" id="change_category">
   <fieldset>
+  <h3>Modifiez une catégorie</h3>
+    
+  <?php
+    $ret = query("SELECT name FROM `category`");
+
+    echo <<<EOL
+        <form method="get">
+        <select name="category">
+            <option value="all">Aucune</option>
+EOL;
+    if (mysqli_num_rows($ret) > 0) {
+        while($row = mysqli_fetch_assoc($ret)) {
+           if (isset($_GET['category']) && $row["name"] == $_GET['category'])
+           {
+            echo <<<EOL
+            <option value="$row[name]" selected >$row[name]</option>
+EOL;
+           }
+           else
+            echo <<<EOL
+            <option value="$row[name]" >$row[name]</option>
+EOL;
+        }
+    }
+    echo <<<EOL
+    <input type='submit' name='submit' value="valider"/>
+    </select>
+    </form>
+EOL;
+?>
 <?php
         if (isset($_GET["category"])){
         $ret = query("SELECT * FROM `category` WHERE name = '$_GET[category]'");
           if (mysqli_num_rows($ret) > 0) {
             while($row = mysqli_fetch_assoc($ret)) {
               echo <<<EOL
-            <h3>Modifiez une catégorie</h3>
             <label for="name">Ancien nom : </label><input id="name" name="name" type="text" value="$row[name]"/><br/>
             <label for="name">Nouveau nom : </label><input id="newname" name="newname" type="text""/><br/>
             <input type="submit" class="submit" name="submit" value="Modifier la catégorie"><br/>
