@@ -31,9 +31,9 @@ EOL;
         }
     }
     echo <<<EOL
-    <input type='submit' name='submit' value="valider"/>
+        <input type='submit' name='submit' value="valider"/>
     </select>
-    </form">
+    </form>
 EOL;
     
     if (isset($_GET['category']) && isset($_GET['submit']) && $_GET['submit'] = "valider")
@@ -43,14 +43,15 @@ EOL;
         else
             $category = $_GET['category'];
     }
-    else{
+    else {
         $category = "all";
     }
 
     if ($category == "all")
-        $cat = query("SELECT product_id from category_map");
+        $cat = query("SELECT DISTINCT product_id from category_map");
     else 
-        $cat = query("SELECT product_id from category_map where category_id = (select category.id from category where category.name = '$category')");
+        $cat = query("SELECT DISTINCT product_id from category_map where category_id = (select category.id from category where category.name = '$category')");
+
     echo '<div class="shopping-list">';
     if (mysqli_num_rows($cat) > 0) {
         while($categories = mysqli_fetch_assoc($cat)) {
@@ -72,7 +73,7 @@ EOL;
                             <div class="button">
                                 <form method="post" class="form1">
                                     <input type="number" name="quantity" min="1" max="$row[stock]" value="1">
-                                    <button type="submit" name="add" value="$row[id]" class="buy"/>Commander</button>
+                                    <button type="submit" name="add" value="$row[id]" class="buy">Ajouter au panier</button>
                                 </form>  
                             </div>
                             <div class="total-price">$row[price]$</div> 

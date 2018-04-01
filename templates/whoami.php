@@ -69,6 +69,22 @@ if (isset($_POST['submit']) && $_POST['submit'] == "Change")
   }
   else
     echo $error."\n";
+    
+}
+if (isset($_POST['submit']) && $_POST['submit'] === "Delete")
+{
+  if ($_SESSION["logged_in"] === TRUE)
+  {
+    $delete = "DELETE FROM `user` WHERE email = '$_SESSION[user_email]'";
+    query($delete);
+    $_SESSION['user_email'] = NULL;
+    $_SESSION['user_id'] = NULL;
+    $_SESSION["logged_in"] = FALSE;
+    echo "Votre compte a été supprimé avec succès.\n";    
+    header("Location: index.php");
+  }
+  else
+    echo "Aucun compte n'est actuallement connecté.\n";
 }
 if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"] === TRUE)
 {
