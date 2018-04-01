@@ -11,5 +11,7 @@ if ($_POST['submit'] === "Delete")
     $_SESSION["user"] = NULL;
     //header("Location: index.php");
   }
+  else
+    echo "Aucun compte n'est actuallement connecté.\n";
 }
 ?>
