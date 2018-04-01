@@ -44,13 +44,14 @@ if (isset($_POST['submit']) && $_POST['submit'] === "Ajouter une catégorie") {
     }
 }
 
-if (isset($_POST['submit']) && $_POST['submit'] === "Modifier une catégorie") {
-    if (!isset($_POST['name']) || $_POST['name'] === "") {
+if (isset($_GET['submit']) && $_GET['submit'] === "Modifier une catégorie") {
+    if (!isset($_GET['name']) || $_GET['name'] === "" || !isset($_GET['newname']) || $_GET['newname'] === "") {
         echo "Le champ doit être rempli.\n";
     }
     else {
-        $name = $_POST['name'];
-        query("UPDATE `category` SET name = '$name' WHERE name = '$_GET[category]'");
+        $name = $_GET['newname'];
+        echo $name;
+        query("UPDATE `category` SET name = '$name' WHERE name = '$_GET[name]'");
     }
 }
 
@@ -115,65 +116,65 @@ if (isset($_POST['submit']) && $_POST['submit'] === "Ajouter un compte")
 function check_error_form_change($check_pw)
 {
   $error = TRUE;
-  if (!isset($_POST['fname']) || !isset($_POST['lname']) || !isset($_POST['email'])
-  || !isset($_POST['passwd']) || $_POST['fname'] === "" || $_POST['lname'] === "" || $_POST['email'] === ""){
+  if (!isset($_GET['fname']) || !isset($_GET['lname']) || !isset($_GET['email'])
+  || !isset($_GET['passwd']) || $_GET['fname'] === "" || $_GET['lname'] === "" || $_GET['email'] === ""){
     $error = "Tous les champs obligatoires doivent être remplis.";
     return ($error);
   }
-  if (preg_match("/^.+@.+\..+$/", $_POST['email']) == FALSE) {
+  if (preg_match("/^.+@.+\..+$/", $_GET['email']) == FALSE) {
     $error = "L'adresse email n'est pas valide.";
     return ($error);
   }
-  else if (preg_match("/^[0-9]+\s+.+\s+.+\s?$/", $_POST['address']) == FALSE) {
+  else if (preg_match("/^[0-9]+\s+.+\s+.+\s?$/", $_GET['address']) == FALSE) {
     $error = "L'adresse n'est pas valide.";
     return ($error);
   }
-  else if (preg_match("/^[0-9]{5}$/", $_POST['postal_code']) == FALSE) {
+  else if (preg_match("/^[0-9]{5}$/", $_GET['postal_code']) == FALSE) {
     $error = "Le code postal n'est pas valide.";
     return ($error);
   }
-  else if (preg_match("/^\+?[0-9]+$/", $_POST['phone']) == FALSE) {
+  else if (preg_match("/^\+?[0-9]+$/", $_GET['phone']) == FALSE) {
     $error = "Le numéro de téléphone n'est pas valide.";
     return ($error);
   }
-  else if (isset($_POST['oldpw']) && hash("whirlpool", $_POST['oldpw']) !== $check_pw['passwd']) {
+  else if (isset($_GET['oldpw']) && hash("whirlpool", $_GET['oldpw']) !== $check_pw['passwd']) {
     $error = "Ancien mot de passe erroné.\n";
     return ($error);
   }
-  else if (isset($_POST['oldpw']) ) {
-    if (strlen($_POST['newpw']) < 5) {
+  else if (isset($_GET['oldpw']) ) {
+    if (strlen($_GET['newpw']) < 5) {
       $error = "Le nouveau mot de passe doit faire au moins 5 caractères.";
       return ($error);
     }
-    else if (preg_match('~[0-9]+~', $_POST['newpw']) == FALSE) {
+    else if (preg_match('~[0-9]+~', $_GET['newpw']) == FALSE) {
       $error = "Le nouveau mot de passe doit comporter au moins un chiffre.";
       return ($error);
     }
   }
   return ($error);
 }
-if (isset($_POST['submit']) && $_POST['submit'] == "Modifier le compte")
+if (isset($_GET['submit']) && $_GET['submit'] == "Modifier le compte")
 {
-  $query = query("SELECT passwd FROM `user` WHERE email = '$_GET[user]");
+  $query = query("SELECT passwd FROM `user` WHERE email = '$_GET[email]'");
   if (mysqli_num_rows($query) > 0)
     $check_pw = mysqli_fetch_assoc($query);
   $error = check_error_form_change($check_pw);
   if ($error === TRUE)
   {
-    $fname = $_POST['fname'];
-    $lname = $_POST['lname'];
-    $email = $_POST['email'];
+    $fname = $_GET['fname'];
+    $lname = $_GET['lname'];
+    $email = $_GET['email'];
     if (isset($oldpw))
-      $oldpw = $_POST['oldpw'];
+      $oldpw = $_GET['oldpw'];
     if (isset($newpw))
-      $newpw = $_POST['newpw'];
-    $address = $_POST['address'];
-    $city = $_POST['city'];
-    $postal_code = $_POST['postal_code'];
-    $phone = $_POST['phone'];
-    $change = "UPDATE `user` SET passwd ='" . hash('whirlpool', $_POST['newpw']) . "', fname = '$fname', lname = '$lname', email = '$email', address = '$address', city = '$city', postal_code = '$postal_code', phone = '$phone' WHERE email = '$_SESSION[user_email]'";
+      $newpw = $_GET['newpw'];
+    $address = $_GET['address'];
+    $city = $_GET['city'];
+    $postal_code = $_GET['postal_code'];
+    $phone = $_GET['phone'];
+    $change = "UPDATE `user` SET passwd ='" . hash('whirlpool', $_GET['newpw']) . "', fname = '$fname', lname = '$lname', email = '$email', address = '$address', city = '$city', postal_code = '$postal_code', phone = '$phone' WHERE email = '$_SESSION[user_email]'";
     query($change);
-    $_SESSION['user_email'] = $_POST['email'];
+    $_SESSION['user_email'] = $_GET['email'];
   }
   else
     echo $error."\n";
@@ -249,7 +250,7 @@ EOL;
 </form>
 
 
-<form method="post" id="change_category">
+<form method="get" id="change_category">
   <fieldset>
   <?php      
     $ret = query("SELECT name FROM `category`");
@@ -272,16 +273,19 @@ EOL;
 EOL;
 ?>
 <?php
+        if (isset($_GET["category"])){
         $ret = query("SELECT * FROM `category` WHERE name = '$_GET[category]'");
           if (mysqli_num_rows($ret) > 0) {
             while($row = mysqli_fetch_assoc($ret)) {
               echo <<<EOL
             <h3>Modifiez une catégorie</h3>
-            <label for="name">Nom : </label><input id="name" name="name" type="text" value="$row[name]"/><br/>
+            <label for="name">Ancien nom : </label><input id="name" name="name" type="text" value="$row[name]"/><br/>
+            <label for="name">Nouveau nom : </label><input id="newname" name="newname" type="text""/><br/>
             <input type="submit" class="submit" name="submit" value="Modifier la catégorie"><br/>
 EOL;
            }
         }  
+    }
 ?>
   </fieldset>
 </form>
@@ -305,8 +309,7 @@ EOL;
   </fieldset>
 </form>
 
-<p>Modifier un utilisateur</p><br/>
-<form method="post" id="change_account">
+<form method="get" id="change_account">
   <fieldset>
   <?php      
     $ret = query("SELECT lname FROM `user`");
@@ -346,7 +349,7 @@ EOL;
             <input type="submit" class="submit" name="submit" value="Modifier le compte" ><br/>
 EOL;
            }
-        }  
+        }
 ?>
   </fieldset>
 </form>
