@@ -1,5 +1,5 @@
 <?php
-include ("handle_db.php");
+include ("ressources/handle_db.php");
 session_start();
 
 function check_error_form_change()
@@ -23,7 +23,7 @@ function check_error_form_change()
   }
 }
 
-if ($_POST['submit'] === "Change" && check_error_form_change() === TRUE)
+if ($_POST['submit'] === "submit" && check_error_form_change() === TRUE)
 {
   $fname = $_POST['fname'];
   $lname = $_POST['lname'];
@@ -32,14 +32,14 @@ if ($_POST['submit'] === "Change" && check_error_form_change() === TRUE)
   $city = $_POST['city'];
   $postal_code = $_POST['postal_code'];
   $phone = $_POST['phone'];
-  $change = "UPDATE `user` SET fname = $fname, lname = $lname, email = $email, 'address' = $address, city = $city, postal_code = $postal_code, phone = $phone WHERE email = '$_SESSION[user_email]'";
+  $change = "UPDATE `user` SET fname = $fname, lname = $lname, email = $email, address = $address, city = $city, postal_code = $postal_code, phone = $phone WHERE email = '$_SESSION[user_email]'";
   query($change);
   echo "Votre compte a été modifié.\n";
 }
 if ($_SESSION["logged_in"] === TRUE)
 {
       ?>
-      <form method="post" action="whoami.php" id="create_account">
+      <form method="post" action="whoami.php" id="change_account">
         <fieldset>
           <?php
           if(isset($error))
@@ -61,7 +61,7 @@ if ($_SESSION["logged_in"] === TRUE)
           <label for="city">Ville : </label><input id="city" name ="city" type="text" value="$row[city]"/><br/>
           <label for="postal_code">Code postal : </label><input id="postal_code" name="postal_code" type="text" value="$row[postal_code]"/><br/>
           <label for="phone">Téléphone : </label><input id="phone" name="phone" type="tel" value="$row[phone]"/><br/>
-          <input type="submit" class="submit" name="submit" value="Change" ><br/>
+          <input type="submit" class="submit" name="submit" value="submit" ><br/>
 EOL
 ?>
 </fieldset>
