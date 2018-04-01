@@ -1,5 +1,5 @@
 <?php
-    $mysqli = mysqli_connect("localhost", "root", "azerty");
+    $mysqli = mysqli_connect("localhost", "root", "berni19642");
 
     if (mysqli_connect_errno($mysqli)) {
         echo "Echec lors de la connexion à MySQL : " . mysqli_connect_error();
