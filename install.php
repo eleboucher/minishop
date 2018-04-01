@@ -63,12 +63,11 @@
         PRIMARY KEY (`id`)
     )";
     mysqli_query($mysqli, $order_item_creation);
-
-    mysqli_query($mysqli, "ALTER TABLE `category_map` ADD CONSTRAINT `category_map_fk0` FOREIGN KEY (`product_id`) REFERENCES `product`(`id`)");
-    mysqli_query($mysqli, "ALTER TABLE `category_map` ADD CONSTRAINT `category_map_fk1` FOREIGN KEY (`category_id`) REFERENCES `category`(`id`)");
-    mysqli_query($mysqli, "ALTER TABLE `order` ADD CONSTRAINT `order_fk0` FOREIGN KEY (`user_id`) REFERENCES `user`(`id`)");
-    mysqli_query($mysqli, "ALTER TABLE `order_item` ADD CONSTRAINT `order_item_fk0` FOREIGN KEY (`order_id`) REFERENCES `order`(`id`)");
-    mysqli_query($mysqli, "ALTER TABLE `order_item` ADD CONSTRAINT `order_item_fk1` FOREIGN KEY (`product_id`) REFERENCES `product`(`id`)");
+    mysqli_query($mysqli, "ALTER TABLE `category_map` ADD CONSTRAINT `category_map_fk0` FOREIGN KEY (`product_id`) REFERENCES `product`(`id`) ON UPDATE CASCADE ON DELETE CASCADE");
+    mysqli_query($mysqli, "ALTER TABLE `category_map` ADD CONSTRAINT `category_map_fk1` FOREIGN KEY (`category_id`) REFERENCES `category`(`id`) ON UPDATE CASCADE ON DELETE CASCADE");
+    mysqli_query($mysqli, "ALTER TABLE `order` ADD CONSTRAINT `order_fk0` FOREIGN KEY (`user_id`) REFERENCES `user`(`id`) ON UPDATE CASCADE ON DELETE CASCADE");
+    mysqli_query($mysqli, "ALTER TABLE `order_item` ADD CONSTRAINT `order_item_fk0` FOREIGN KEY (`order_id`) REFERENCES `order`(`id`) ON UPDATE CASCADE ON DELETE CASCADE");
+    mysqli_query($mysqli, "ALTER TABLE `order_item` ADD CONSTRAINT `order_item_fk1` FOREIGN KEY (`product_id`) REFERENCES `product`(`id`) ON UPDATE CASCADE ON DELETE CASCADE");
 
     mysqli_query($mysqli, "INSERT INTO product (name, description, img, price, stock) VALUES ('McLaren MP4/3', 'best cars much wow', 'https://cdn-8.motorsport.com/images/mgl/0oKPyrw0/s8/f1-hungarian-gp-1987-alain-prost-mclaren-mp4-3-tag-porsche.jpg', 10000, 4)"); 
     mysqli_query($mysqli, "INSERT INTO product (name, description, img, price, stock) VALUES ('McLaren MP4/4', 'best cars much wow', 'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/gettyimages-811385962-1510339287.jpg', 10000, 4)");
