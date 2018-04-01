@@ -20,8 +20,8 @@ if (isset($_POST['submit']) && $_POST['submit'] === "Ajouter un produit") {
 }
 
 if (isset($_GET['submit']) && $_GET['submit'] == "Modifier le produit") {
-  echo "ouais";
-    if (!isset($_GET['name']) || !isset($_GET['description']) || !isset($_GET['img']) || !isset($_GET['price']) || !isset($_GET['stock'])) {
+    if (!isset($_GET['name']) || !isset($_GET['description']) || !isset($_GET['img']) || !isset($_GET['price']) || !isset($_GET['stock']) || 
+    $_GET['name'] === "" || $_GET['description'] === "" || $_GET['img'] === "" || $_GET['price'] === "" || $_GET['stock'] === "") {
         echo "Tous les champs doivent être remplis.\n";
     }
     else {
@@ -30,8 +30,12 @@ if (isset($_GET['submit']) && $_GET['submit'] == "Modifier le produit") {
         $img = $_GET['img'];
         $price = $_GET['price'];
         $stock = $_GET['stock'];
-        query("UPDATE `product` SET name = '$name', description = '$description', img = '$img', price = '$price', stock = '$stock' WHERE name = '$_GET[name]'");
+        query("UPDATE `product` SET name = '$name', description = '$description', img = '$img', price = '$price', stock = '$stock' WHERE name = '$_GET[product]'");
     }
+}
+
+if (isset($_GET['submit']) && $_GET['submit'] == "Supprimer le produit") {
+        query("DELETE FROM product WHERE name = '$_GET[name]'");
 }
 
 if (isset($_POST['submit']) && $_POST['submit'] === "Ajouter une catégorie") {
@@ -111,7 +115,6 @@ if (isset($_POST['submit']) && $_POST['submit'] === "Ajouter un compte")
     }
   }
 }
-
 
 function check_error_form_change($check_pw)
 {
@@ -197,8 +200,10 @@ if (isset($_GET['submit']) && $_GET['submit'] == "Modifier le compte")
 
 <form method="get" id="change_object">
   <fieldset>
-  <?php      
+  <h3>Modifiez votre produit</h3>      
+  <?php
     $ret = query("SELECT name FROM `product`");
+
     echo <<<EOL
         <form method="get">
         <select name="product">
@@ -206,15 +211,22 @@ if (isset($_GET['submit']) && $_GET['submit'] == "Modifier le compte")
 EOL;
     if (mysqli_num_rows($ret) > 0) {
         while($row = mysqli_fetch_assoc($ret)) {
+           if (isset($_GET['product']) && $row["name"] == $_GET['product'])
+           {
             echo <<<EOL
-            <option value="$row[name]">$row[name]</option>
+            <option value="$row[name]" selected >$row[name]</option>
+EOL;
+           }
+           else
+            echo <<<EOL
+            <option value="$row[name]" >$row[name]</option>
 EOL;
         }
     }
     echo <<<EOL
     <input type='submit' name='submit' value="valider"/>
     </select>
-    </form">
+    </form>
 EOL;
 ?>
 <?php
@@ -223,7 +235,6 @@ EOL;
           if (mysqli_num_rows($ret) > 0) {
             while($row = mysqli_fetch_assoc($ret)) {
               echo <<<EOL
-            <h3>Modifiez votre produit</h3>
             <label for="name">Nom : </label><input id="name" name="name" type="text" value="$row[name]"/><br/>
             <label for="description">Description : </label><input id="description" name="description" type="text" value="$row[description]"/><br/>
             <label for="img">Image : </label><input id="img" name="img" type="url" value="$row[img]"/><br/>
@@ -238,7 +249,31 @@ EOL;
   </fieldset>
 </form>
 
-<p>Supprimer un produit</p><br/>
+<form method="get" id="delete_object">
+  <fieldset>
+  <h3>Supprimer un produit</h3>      
+  <?php      
+    $ret = query("SELECT name FROM `product`");
+    echo <<<EOL
+        <form method="get">
+        <select name="name">
+            <option value="all">Aucune</option>
+EOL;
+    if (mysqli_num_rows($ret) > 0) {
+        while($row = mysqli_fetch_assoc($ret)) {
+            echo <<<EOL
+            <option value="$row[name]">$row[name]</option>
+EOL;
+        }
+    }
+    echo <<<EOL
+    <input type='submit' name='submit' value="Supprimer le produit"/>
+    </select>
+    </form>
+EOL;
+?>
+  </fieldset>
+</form>
 
 <h2>Gérer les catégories</h2>
 <form method="post" id="add_categorie">
@@ -269,7 +304,7 @@ EOL;
     echo <<<EOL
     <input type='submit' name='submit' value="valider"/>
     </select>
-    </form">
+    </form>
 EOL;
 ?>
 <?php
@@ -328,7 +363,7 @@ EOL;
     echo <<<EOL
     <input type='submit' name='submit' value="valider"/>
     </select>
-    </form">
+    </form>
 EOL;
 ?>
 <?php
@@ -353,5 +388,3 @@ EOL;
 ?>
   </fieldset>
 </form>
-
-<p>Supprimer un compte</p><br/>
