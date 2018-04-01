@@ -1,7 +1,9 @@
 <?php
 include_once ("ressources/handle_db.php");
-if (!isset($_SESSION))
-    session_start();
+if(!isset($_SESSION)) 
+{ 
+    session_start(); 
+} 
 
 function check_error_form()
 {
@@ -90,9 +92,4 @@ if (isset($_POST['submit']) && $_POST['submit'] === "Delete")
     <label for="phone">Téléphone : </label><input id="phone" name="phone" type="tel"/><br/>
     <input type="submit" class="submit" name="submit" value="Submit" ><br/>
   </fieldset>
-</form>
-
-<form method="post" id="delete">
-  <p>Pour supprimer votre compte actuel, appuyez sur le bouton ci-dessous</p>
-  <input type="submit" class="submit" name="submit" value="Delete"/>
 </form>
