@@ -19,17 +19,18 @@ if (isset($_POST['submit']) && $_POST['submit'] === "Ajouter un produit") {
     }
 }
 
-if (isset($_POST['submit']) && $_POST['submit'] === "Modifier le produit") {
-    if (!isset($_POST['name']) || !isset($_POST['description']) || !isset($_POST['img']) || !isset($_POST['price']) || !isset($_POST['stock'])) {
+if (isset($_GET['submit']) && $_GET['submit'] == "Modifier le produit") {
+  echo "ouais";
+    if (!isset($_GET['name']) || !isset($_GET['description']) || !isset($_GET['img']) || !isset($_GET['price']) || !isset($_GET['stock'])) {
         echo "Tous les champs doivent être remplis.\n";
     }
     else {
-        $name = $_POST['name'];
-        $description = $_POST['description'];
-        $img = $_POST['img'];
-        $price = $_POST['price'];
-        $stock = $_POST['stock'];
-        query("UPDATE `product` SET name = '$name', description = '$description', img = $img, price = $price, stock = $stock WHERE name = '$_GET[product]'");
+        $name = $_GET['name'];
+        $description = $_GET['description'];
+        $img = $_GET['img'];
+        $price = $_GET['price'];
+        $stock = $_GET['stock'];
+        query("UPDATE `product` SET name = '$name', description = '$description', img = '$img', price = '$price', stock = '$stock' WHERE name = '$_GET[name]'");
     }
 }
 
@@ -180,7 +181,6 @@ if (isset($_POST['submit']) && $_POST['submit'] == "Modifier le compte")
 
 ?>
 
-<html><body>
 <h2>Gérer les produits</h2>
 <form method="post" id="add_object">
   <fieldset>
@@ -194,7 +194,7 @@ if (isset($_POST['submit']) && $_POST['submit'] == "Modifier le compte")
   </fieldset>
 </form>
 
-<form method="post" id="change_object">
+<form method="get" id="change_object">
   <fieldset>
   <?php      
     $ret = query("SELECT name FROM `product`");
@@ -217,7 +217,7 @@ EOL;
 EOL;
 ?>
 <?php
-        echo $_GET[['product']];
+        if (isset($_GET["product"])){
         $ret = query("SELECT * FROM `product` WHERE name = '$_GET[product]'");
           if (mysqli_num_rows($ret) > 0) {
             while($row = mysqli_fetch_assoc($ret)) {
@@ -232,6 +232,7 @@ EOL;
 EOL;
            }
         }  
+      }
 ?>
   </fieldset>
 </form>
@@ -351,4 +352,3 @@ EOL;
 </form>
 
 <p>Supprimer un compte</p><br/>
-</html></body>
