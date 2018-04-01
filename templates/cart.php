@@ -1,13 +1,9 @@
 <?php
     include_once ("ressources/handle_db.php");
     session_start();
-
     function remove_prod($id)
     {
-        echo $id."\n";
         $index = array_search($id, array_column($_SESSION["products"], "id"));
-        echo $index."\n";
-        print_r ($_SESSION["products"]);
         if ($index !== false)
             array_splice($_SESSION["products"], $index, 1);
     }
@@ -19,7 +15,6 @@
         $index = array_search($_POST["id"], array_column($_SESSION["products"], "id"));
         $_SESSION["products"][$index]["quantity"] = $_POST["quantity"];
     }
-    //$_SESSION["products"] = array(array("id" => 1, "quantity" => 1 ), array("id" => 2, "quantity" => 2 ), array("id" => 6, "quantity" => 4 ));
     if (isset($_SESSION["products"]))
     {
         foreach ($_SESSION["products"] as $product => $id) {
@@ -43,7 +38,7 @@
                                 <button type="submit" name="quantity" value="$row[id]">Modifier</button>
                             </form>
                             <form method="post" class="form2">
-                            <button type="submit" name="del" value="$id[id]"/>Supprimer</button>
+                            <button type="submit" name="del" value="$id[id]">Supprimer</button>
                             </form>  
                         </div>
                         <div class="total-price">$row[price]$</div> 
@@ -60,5 +55,7 @@ EOL;
         </form>
 EOL;
     }
+    else 
+    echo "Panier Vide";
 
 ?>
