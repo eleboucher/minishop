@@ -1,6 +1,6 @@
 <?php
 include_once ("ressources/handle_db.php");
-if (isset($_SESSION))
+if (!isset($_SESSION))
     session_start();
 
 function check_error_form()
@@ -57,7 +57,7 @@ if (isset($_POST['submit']) && $_POST['submit'] === "Submit")
       //header("Location: index.php");
     }
     else if (isset($error)) {
-      echo $error."\n";
+      echo '<script> alert("'.$error.'");</script>';
     }
   }
 }
@@ -70,7 +70,7 @@ if (isset($_POST['submit']) && $_POST['submit'] === "Delete")
     query($delete);
     $_SESSION["user"] = NULL;
     echo "Votre compte a été supprimé avec succès.\n";    
-    //header("Location: index.php");
+    header("Location: index.php");
   }
   else
     echo "Aucun compte n'est actuallement connecté.\n";
