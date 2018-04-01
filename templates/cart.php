@@ -9,7 +9,6 @@ if(!isset($_SESSION)) {
         if ($index !== false)
             array_splice($_SESSION["products"], $index, 1);
     }
-    
     if (isset($_POST["del"]) && is_numeric($_POST["del"])){
         remove_prod($_POST["del"]);
     }

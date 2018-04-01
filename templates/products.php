@@ -1,5 +1,5 @@
 <?php
-    if (isset($_SESSION)) {
+    if (!isset($_SESSION)) {
         session_start();
     }
     if (isset($_POST["add"]) && is_numeric($_POST["add"]) && isset($_POST["quantity"]) && is_numeric($_POST["quantity"])){

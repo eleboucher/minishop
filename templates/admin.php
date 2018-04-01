@@ -60,6 +60,7 @@ if (isset($_GET['submit']) && $_GET['submit'] === "Modifier la catégorie") {
 if (isset($_GET['submit']) && $_GET['submit'] === "Lier une categorie") {
     query("REPLACE INTO category_map (category_id, product_id) VALUE ((SELECT id from category where name = '$_GET[category]'), (select id from product where name = '$_GET[product]')) ");
 }
+
 if (isset($_GET['submit']) && $_GET['submit'] == "Supprimer la categorie") {
     query("DELETE FROM category WHERE name = '$_GET[name]'");
 }
@@ -244,6 +245,7 @@ EOL;
           if (mysqli_num_rows($ret) > 0) {
             while($row = mysqli_fetch_assoc($ret)) {
               echo <<<EOL
+             </br>
             <label for="name">Nom : </label><input id="name" name="name" type="text" value="$row[name]"/><br/>
             <label for="description">Description : </label><input id="description" name="description" type="text" value="$row[description]"/><br/>
             <label for="img">Image : </label><input id="img" name="img" type="url" value="$row[img]"/><br/>
@@ -370,6 +372,7 @@ EOL;
           if (mysqli_num_rows($ret) > 0) {
             while($row = mysqli_fetch_assoc($ret)) {
               echo <<<EOL
+              </br>
             <label for="name">Ancien nom : </label><input id="name" name="name" type="text" value="$row[name]"/><br/>
             <label for="name">Nouveau nom : </label><input id="newname" name="newname" type="text""/><br/>
             <input type="submit" class="submit" name="submit" value="Modifier la catégorie"><br/>
@@ -453,6 +456,7 @@ EOL;
           if (mysqli_num_rows($ret) > 0) {
             while($row = mysqli_fetch_assoc($ret)) {
               echo <<<EOL
+              </br>
             <label for="fname">Prénom : </label><input id="fname" name="fname" type="text" value="$row[fname]"/><br/>
             <label for="lname">Nom : </label><input id="lname" name="lname" type="text" value="$row[lname]"/><br/>
             <label for="email">E-mail : </label><input id="email" name="email" type="text" value="$row[email]"/><br/>

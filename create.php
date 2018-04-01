@@ -2,6 +2,7 @@
     <head>
         <title>Création de compte</title>
         <link rel="stylesheet" type="text/css" href="public/css/style.css">
+        <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     </head>
     <body>
         <?php include("templates/navbar.php")?>

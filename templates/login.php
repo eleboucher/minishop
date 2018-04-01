@@ -29,11 +29,7 @@ if (isset($_POST['submit']) && $_POST['submit'] === "Login")
         $_SESSION["user_email"] = $_POST["email"];
         $_SESSION['login_id'] = $ret;
         echo "Connexion réussie. Bienvenue !\n";
-        if ($_SESSION['login_id'] == 1) {
-            header("Location: admin.php");
-        }
-        else
-            header("Location: index.php");
+        header("Location: index.php");
     }
     else{
         echo "L'email ou le mot de passe est incorrect.\n";
