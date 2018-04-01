@@ -1,5 +1,5 @@
 <?php
-    include ("ressources/handle_db.php");
+    include_once ("ressources/handle_db.php");
     session_start();
 
     function remove_prod($id)
@@ -23,7 +23,7 @@
     if (isset($_SESSION["products"]))
     {
         foreach ($_SESSION["products"] as $product => $id) {
-            $ret = query("SELECT * FROM `product` where ID = '$id[id]'");
+            $ret = query("SELECT * FROM `product` where id = $id[id] ");
             if (mysqli_num_rows($ret) > 0) {
                 
                 while($row = mysqli_fetch_assoc($ret)) {

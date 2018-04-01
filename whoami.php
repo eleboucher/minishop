@@ -7,6 +7,7 @@
   <?php include ("templates/navbar.php"); ?>
     <div class="section">
       <?php include ("templates/whoami.php"); ?>
+      <?php include ("templates/order.php"); ?>
     </div>
 </body>
 </html>

@@ -1,8 +1,8 @@
 <?php
     session_start();
     if (isset($_POST["add"]) && is_numeric($_POST["add"]) && isset($_POST["quantity"]) && is_numeric($_POST["quantity"])){
-        $index = array_search($_POST["add"], array_column($_SESSION["products"], "id"));
         if (isset($_SESSION["products"])){
+            $index = array_search($_POST["add"], array_column($_SESSION["products"], "id"));
             if ($index === false)
                 $_SESSION["products"][] = array("id" => $_POST["add"], "quantity" => $_POST["quantity"]);
             else
@@ -10,8 +10,7 @@
         }
         else
         {
-            if ($index === false)
-                $_SESSION["products"] = array("id" => $_POST["add"], "quantity" => $_POST["quantity"]);
+            $_SESSION["products"] = array(array("id" => $_POST["add"], "quantity" => $_POST["quantity"]));
         }
     }
     include ("ressources/handle_db.php");
@@ -47,9 +46,9 @@ EOL;
     }
 
     if ($category == "all")
-        $cat = query("select product_id from category_map");
+        $cat = query("SELECT product_id from category_map");
     else 
-        $cat = query("select product_id from category_map where category_id = (select category.id from category where category.name = '$category')");
+        $cat = query("SELECT product_id from category_map where category_id = (select category.id from category where category.name = '$category')");
     echo '<div class="shopping-list">';
     if (mysqli_num_rows($cat) > 0) {
         while($categories = mysqli_fetch_assoc($cat)) {

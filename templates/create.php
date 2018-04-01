@@ -1,5 +1,5 @@
 <?php
-include ("ressources/handle_db.php");
+include_once ("ressources/handle_db.php");
 session_start();
 
 function check_error_form()
@@ -56,7 +56,7 @@ if (isset($_POST['submit']) && $_POST['submit'] === "Submit")
       //header("Location: index.php");
     }
     else if (isset($error)) {
-      echo $error."\n";
+      echo '<script> alert("'.$error.'");</script>';
     }
   }
 }
