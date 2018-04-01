@@ -3,8 +3,7 @@ include ("ressources/handle_db.php");
 session_start();
 
 function connexion($email, $hash_passwd)
-{
-   echo "in";    
+{  
   $var1 = query("SELECT passwd FROM `user` WHERE email = '$email'");
   $var2 = query("SELECT email FROM `user` WHERE passwd = '$hash_passwd'");
   if (mysqli_num_rows($var1) > 0)
