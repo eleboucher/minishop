@@ -9,5 +9,6 @@
         <div class="section">
             <?php include("templates/cart.php")?>
         </div>
+        <?php include("templates/footer.php")?>
     </body>
 </html>

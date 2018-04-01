@@ -20,7 +20,6 @@
         foreach ($_SESSION["products"] as $product => $id) {
             $ret = query("SELECT * FROM `product` where id = $id[id] ");
             if (mysqli_num_rows($ret) > 0) {
-                
                 while($row = mysqli_fetch_assoc($ret)) {
                     echo <<<EOL
                     <div class="item">
@@ -48,7 +47,7 @@ EOL;
                   
             }
         } 
-
+        if (isset($_SESSION["products"]) && $_SESSION["products"] != NULL)
         echo <<<EOL
         <form action="buy.php" style="float:right;">
             <button type="submit" class="buy">Commander</button>

@@ -30,6 +30,20 @@ nav li a:hover {
     margin-top :40px;
 }
 
+.title {
+    text-align: center;
+}
+.logo {
+    height: 80px;
+    width: auto;
+}
+
+.footer{
+    position:fixed;
+    bottom: 0;
+    width:100%;
+}
+
 .shopping-cart {
     background: #FFFFFF;
     box-shadow: 1px 2px 3px 0px rgba(0,0,0,0.10);
@@ -52,6 +66,22 @@ nav li a:hover {
     
 }
 
+.showcase {
+    background: #FFFFFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+.item-showcase{ 
+    padding: 20px 30px;
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+}
 .image {
     margin-right: 50px;
 }
