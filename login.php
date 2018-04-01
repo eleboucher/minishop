@@ -6,8 +6,8 @@
     <body>
         <?php include("templates/navbar.php")?>
         
-        <div>
+        <div class="section">
             <?php include("templates/login.php")?>
-        </div>
+      </div>
     </body>
 </html>

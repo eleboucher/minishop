@@ -6,7 +6,7 @@
     <body>
         <?php include("templates/navbar.php")?>
         
-        <div>
+        <div class="section">
             <?php include("templates/create.php")?>
         </div>
     </body>
