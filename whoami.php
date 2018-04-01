@@ -4,6 +4,9 @@
      <link rel="stylesheet" type="text/css" href="public/css/style.css">
 </head>
 <body>
-  <?php include ("templates/whoami.php"); ?>
+  <?php include ("templates/navbar.php"); ?>
+    <div class="section">
+      <?php include ("templates/whoami.php"); ?>
+    </div>
 </body>
 </html>

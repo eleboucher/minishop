@@ -77,6 +77,7 @@
     mysqli_query($mysqli, "INSERT INTO product (name, description, img, price, stock) VALUES ('McLaren MP4/7A', 'best cars much wow', 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/McLaren_MP4-7_left_Honda_Collection_Hall.jpg/1200px-McLaren_MP4-7_left_Honda_Collection_Hall.jpg', 10000, 4)");
     mysqli_query($mysqli, "INSERT INTO product (name, description, img, price, stock) VALUES ('McLaren MP4/8', 'best cars much wow', 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Senna%27s_McLaren_MP4-8.jpg/1200px-Senna%27s_McLaren_MP4-8.jpg', 10000, 4)");
     mysqli_query($mysqli, "INSERT INTO product (name, description, img, price, stock) VALUES ('McLaren MCL32', 'best cars much wow', 'https://photos2.tf1.fr/660/370/mclaren-f1-mcl32-1-458395-0@1x.jpg', 10000, 4)");
+    mysqli_query($mysqli, "INSERT INTO product (name, description, img, price, stock) VALUES ('RedBull RB4', 'Moteur v8 18 000 RPM arriere, Masse : 605 kg, 7 vitesses', 'https://upload.wikimedia.org/wikipedia/commons/4/4b/Redbull-webber2-spain-2008-lrg.jpg', 1022.4, 4)");
     
     mysqli_query($mysqli, "INSERT INTO category (name) VALUE ('Moteur v10')");
     mysqli_query($mysqli, "INSERT INTO category (name) VALUE ('Moteur v8')");
@@ -88,6 +89,7 @@
     mysqli_query($mysqli, "INSERT INTO category_map (product_id, category_id) VALUE ((SELECT id from product where name = 'McLaren MP4/7A'), (select id from category where name = 'Moteur v10')) ") or die(mysqli_error($mysqli));
     mysqli_query($mysqli, "INSERT INTO category_map (product_id, category_id) VALUE ((SELECT id from product where name = 'McLaren MP4/6'), (select id from category where name = 'Moteur v10')) ") or die(mysqli_error($mysqli));
     mysqli_query($mysqli, "INSERT INTO category_map (product_id, category_id) VALUE ((SELECT id from product where name = 'McLaren MP4/8'), (select id from category where name = 'Moteur v10')) ") or die(mysqli_error($mysqli));
+    mysqli_query($mysqli, "INSERT INTO category_map (product_id, category_id) VALUE ((SELECT id from product where name = 'RedBull RB4'), (select id from category where name = 'Moteur v8')) ") or die(mysqli_error($mysqli));
 
     mysqli_query($mysqli, "INSERT INTO user (passwd, fname, lname, email, address, city, postal_code, phone) VALUES ('" . hash('whirlpool', 'admin') . "', 'admin', 'admin', 'admin', 'admin', 'admin', 01, 'admin')") or die(mysqli_error($mysqli));
     mysqli_query($mysqli, "INSERT INTO user (passwd, fname, lname, email, address, city, postal_code, phone) VALUES ('" . hash('whirlpool', 'test') . "', 'test', 'test', 'test', 'test', 'test', 02, 'test')");

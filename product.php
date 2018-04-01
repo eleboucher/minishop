@@ -5,7 +5,8 @@
     </head>
     <body>
         <?php include("templates/navbar.php")?>
-        
-        <?php include("templates/products.php")?>
+        <div class="section">
+            <?php include("templates/products.php")?>
+        </div>
     </body>
 </html>
