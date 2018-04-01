@@ -203,9 +203,9 @@ if (isset($_POST['submit']) && $_POST['submit'] == "Modifier le compte")
     $email = escape_string($_POST['email']);
     $fname = escape_string($_POST['fname']);
     $lname = escape_string($_POST['lname']);
-    if (isset($oldpw))
+    if (isset($_POST['oldpw']))
       $oldpw = escape_string($_POST['oldpw']);
-    if (isset($newpw))
+    if (isset($_POST['newpw']))
       $newpw = escape_string($_POST['newpw']);
     $address = escape_string($_POST['address']);
     $city = escape_string($_POST['city']);
