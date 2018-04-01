@@ -68,7 +68,7 @@ if (isset($_POST['submit']) && $_POST['submit'] == "Supprimer la categorie") {
 function check_error_form()
 {
   $error = TRUE;
-  if (preg_match("/^.+@.+\..+$/", $_POST['email']) == FALSE) {
+  if (preg_match("/^.+@.+\..+$/", $_POST['email']) == FALSE && $_POST['email'] !== 'admin') {
     $error = "L'adresse email n'est pas valide.";
     return ($error);
   }
@@ -80,7 +80,7 @@ function check_error_form()
     $error = "Le mot de passe doit comporter au moins un chiffre.";
     return ($error);
   }
-  else if (preg_match("/^[0-9]+\s+.+\s+.+\s?$/", $_POST['address']) == FALSE) {
+  else if (preg_match("/^[0-9]+\s+.+\s+.+\s?$/", $_POST['address'] && $_POST['address'] !== 'admin') == FALSE) {
     $error = "L'adresse n'est pas valide.";
     return ($error);
   }

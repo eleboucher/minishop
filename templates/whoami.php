@@ -6,20 +6,21 @@ if (!isset($_SESSION)) {
 function check_error_form_change($check_pw)
 {
   $error = TRUE;
-  if (!isset($_POST['fname']) || !isset($_POST['lname']) || !isset($_POST['email'])
-  || !isset($_POST['passwd']) || $_POST['fname'] === "" || $_POST['lname'] === "" || $_POST['email'] === ""){
+
+  if (!isset($_POST['fname']) || !isset($_POST['lname']) || !isset($_POST['email']) || !isset($_POST['oldpw'])
+  || !isset($_POST['newpw']) || $_POST['fname'] === "" || $_POST['lname'] === "" || $_POST['email'] === ""){
     $error = "Tous les champs obligatoires doivent être remplis.";
     return ($error);
   }
-  if (preg_match("/^.+@.+\..+$/", $_POST['email']) == FALSE) {
+  if (preg_match("/^.+@.+\..+$/", $_POST['email']) == FALSE && $_POST['email'] !== 'admin') {
     $error = "L'adresse email n'est pas valide.";
     return ($error);
   }
-  else if (preg_match("/^[0-9]+\s+.+\s+.+\s?$/", $_POST['address']) == FALSE) {
+  else if (preg_match("/^[0-9]+\s+.+\s+.+\s?$/", $_POST['address']) == FALSE && $_POST['address'] !== 'admin') {
     $error = "L'adresse n'est pas valide.";
     return ($error);
   }
-  else if (preg_match("/^[0-9]{5}$/", $_POST['postal_code']) == FALSE) {
+  else if (preg_match("/^[0-9]{5}$/", $_POST['postal_code']) == FALSE ) {
     $error = "Le code postal n'est pas valide.";
     return ($error);
   }
@@ -54,9 +55,9 @@ if (isset($_POST['submit']) && $_POST['submit'] == "Change")
     $fname = $_POST['fname'];
     $lname = $_POST['lname'];
     $email = $_POST['email'];
-    if (isset($oldpw))
+    if (isset($_POST['oldpw']))
       $oldpw = $_POST['oldpw'];
-    if (isset($newpw))
+    if (isset($_POST['newpw']))
       $newpw = $_POST['newpw'];
     $address = $_POST['address'];
     $city = $_POST['city'];
@@ -99,7 +100,7 @@ if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"] === TRUE)
           <h1>Modifiez votre compte</h1>
           <label for="fname">Prénom : </label><input id="fname" name="fname" type="text" value="$row[fname]"/><br/>
           <label for="lname">Nom : </label><input id="lname" name="lname" type="text" value="$row[lname]"/><br/>
-          <label for="email">E-mail : </label><input id="email" name="email" type="email" value="$row[email]"/><br/>
+          <label for="email">E-mail : </label><input id="email" name="email" type="text" value="$row[email]"/><br/>
           <label for="oldpw">Ancien mot de passe : </label><input id="oldpw" type="password" name="oldpw"/><br/>
           <label for="newpw">Nouveau mot de passe : </label><input id="newpw" type="password" name="newpw"/><br/>
           <label for="address">Adresse : </label><input id="address" name ="address" type="text" value="$row[address]"/><br/>

@@ -37,7 +37,7 @@ nav li a:hover {
 }
 
 .section {
-    margin-top :40px;
+    margin: 40px 40px;
 }
 
 .title {
@@ -182,6 +182,7 @@ nav li a:hover {
     }
     .image img {
         width: 50%;
+        height: auto;
     }
     .image,
     .quantity,
