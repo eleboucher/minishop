@@ -230,11 +230,11 @@ if (isset($_POST['submit']) && $_POST['submit'] == "Supprimer le compte") {
 <form method="post" id="add_object">
   <fieldset>
     <h3>Ajouter un produit</h3>
-    <label for="name">Nom : </label><input id="name" name="name" type="text"/><br/>
-    <label for="description">Description : </label><input id="description" name="description" type="text"/><br/>
-    <label for="img">Image : </label><input id="img" name="img" type="url"/><br/>
-    <label for="price">Prix : </label><input id="price" type="number" name="price"/><br/>
-    <label for="stock">Stock : </label><input id="stock" name ="stock" type="number"/><br/>
+    <label for="name">Nom : </label><input name="name" type="text"/><br/>
+    <label for="description">Description : </label><input  name="description" type="text"/><br/>
+    <label for="img">Image : </label><input  name="img" type="url"/><br/>
+    <label for="price">Prix : </label><input type="number" name="price"/><br/>
+    <label for="stock">Stock : </label><input name ="stock" type="number"/><br/>
     <input type="submit" class="submit" name="submit" value="Ajouter un produit" ><br/>
   </fieldset>
 </form>
@@ -280,11 +280,11 @@ EOL;
             while($row = mysqli_fetch_assoc($ret)) {
               echo <<<EOL
              </br>
-            <label for="name">Nom : </label><input id="name" name="name" type="text" value="$row[name]"/><br/>
-            <label for="description">Description : </label><input id="description" name="description" type="text" value="$row[description]"/><br/>
-            <label for="img">Image : </label><input id="img" name="img" type="url" value="$row[img]"/><br/>
-            <label for="price">Prix : </label><input id="price" type="number" name="price" value="$row[price]"/><br/>
-            <label for="stock">Stock : </label><input id="stock" name ="stock" type="number" value="$row[stock]"/><br/>
+            <label for="name">Nom : </label><input  name="name" type="text" value="$row[name]"/><br/>
+            <label for="description">Description : </label><input name="description" type="text" value="$row[description]"/><br/>
+            <label for="img">Image : </label><input  name="img" type="url" value="$row[img]"/><br/>
+            <label for="price">Prix : </label><input type="number" name="price" value="$row[price]"/><br/>
+            <label for="stock">Stock : </label><input  name ="stock" type="number" value="$row[stock]"/><br/>
             <input type="submit" class="submit" name="submit" value="Modifier le produit"><br/>
 EOL;
            }
@@ -324,7 +324,7 @@ EOL;
 <form method="post" id="add_categorie">
   <fieldset>
     <h3>Ajouter une catégorie</h3>
-    <label for="name">Nom : </label><input id="name" name="name" type="text"/><br/>
+    <label for="name">Nom : </label><input  name="name" type="text"/><br/>
     <input type="submit" class="submit" name="submit" value="Ajouter une catégorie" ><br/>
   </fieldset>
 </form>
@@ -410,8 +410,8 @@ EOL;
             while($row = mysqli_fetch_assoc($ret)) {
               echo <<<EOL
               </br>
-            <label for="name">Ancien nom : </label><input id="name" name="name" type="text" value="$row[name]"/><br/>
-            <label for="name">Nouveau nom : </label><input id="newname" name="newname" type="text""/><br/>
+            <label for="name">Ancien nom : </label><input name="name" type="text" value="$row[name]"/><br/>
+            <label for="name">Nouveau nom : </label><input name="newname" type="text""/><br/>
             <input type="submit" class="submit" name="submit" value="Modifier la catégorie"><br/>
 EOL;
            }
@@ -452,14 +452,14 @@ EOL;
 <form method="post" id="add_account">
   <fieldset>
     <h3>Ajouter un compte</h3>
-    <label for="fname">Prénom : </label><input id="fname" name="fname" type="text"/><br/>
-    <label for="lname">Nom : </label><input id="lname" name="lname" type="text"/><br/>
-    <label for="email">E-mail : </label><input id="email" name="email" type="email"/><br/>
-    <label for="passwd">Mot de passe : </label><input id="passwd" type="password" name="passwd"/><br/>
-    <label for="address">Adresse : </label><input id="address" name ="address" type="text"/><br/>
-    <label for="city">Ville : </label><input id="city" name ="city" type="text"/><br/>
-    <label for="postal_code">Code postal : </label><input id="postal_code" name="postal_code" type="text"/><br/>
-    <label for="phone">Téléphone : </label><input id="phone" name="phone" type="tel"/><br/>
+    <label for="fname">Prénom : </label><input  name="fname" type="text"/><br/>
+    <label for="lname">Nom : </label><input  name="lname" type="text"/><br/>
+    <label for="email">E-mail : </label><input  name="email" type="email"/><br/>
+    <label for="passwd">Mot de passe : </label><input  type="password" name="passwd"/><br/>
+    <label for="address">Adresse : </label><input  name ="address" type="text"/><br/>
+    <label for="city">Ville : </label><input name ="city" type="text"/><br/>
+    <label for="postal_code">Code postal : </label><input name="postal_code" type="text"/><br/>
+    <label for="phone">Téléphone : </label><input  name="phone" type="tel"/><br/>
     <input type="submit" class="submit" name="submit" value="Ajouter un compte" ><br/>
   </fieldset>
 </form>
@@ -471,14 +471,24 @@ EOL;
     $ret = query("SELECT email FROM `user`");
     echo <<<EOL
         <form method="post">
-        <select name="email">
+        <select name="account_email">
             <option value="all">Aucune</option>
 EOL;
+echo $_POST['email'];
     if (mysqli_num_rows($ret) > 0) {
         while($row = mysqli_fetch_assoc($ret)) {
+         
+          if (isset($_POST['account_email']) && $row[email] == escape_string($_POST['account_email']))
+           {
+            echo <<<EOL
+            <option value="$row[email]" selected >$row[email]</option>
+EOL;
+           }
+           else
             echo <<<EOL
             <option value="$row[email]">$row[email]</option>
 EOL;
+
         }
     }
     echo <<<EOL
@@ -489,22 +499,22 @@ EOL;
 ?>
 <?php
              
-    if (isset($_POST['email']) && $_POST['email'] !== ""){
-    $email = escape_string($_POST['email']);   
+    if (isset($_POST['account_email']) && $_POST['account_email'] !== ""){
+      $email = escape_string($_POST['account_email']);
         $ret = query("SELECT * FROM `user` WHERE email = '$email'");
           if (mysqli_num_rows($ret) > 0) {
             while($row = mysqli_fetch_assoc($ret)) {
               echo <<<EOL
               </br>
-            <label for="fname">Prénom : </label><input id="fname" name="fname" type="text" value="$row[fname]"/><br/>
-            <label for="lname">Nom : </label><input id="lname" name="lname" type="text" value="$row[lname]"/><br/>
-            <label for="email">E-mail : </label><input id="email" name="email" type="text" value="$row[email]"/><br/>
-            <label for="oldpw">Ancien mot de passe : </label><input id="oldpw" type="password" name="oldpw"/><br/>
-            <label for="newpw">Nouveau mot de passe : </label><input id="newpw" type="password" name="newpw"/><br/>
-            <label for="address">Adresse : </label><input id="address" name ="address" type="text" value="$row[address]"/><br/>
-            <label for="city">Ville : </label><input id="city" name ="city" type="text" value="$row[city]"/><br/>
-            <label for="postal_code">Code postal : </label><input id="postal_code" name="postal_code" type="text" value="$row[postal_code]"/><br/>
-            <label for="phone">Téléphone : </label><input id="phone" name="phone" type="tel" value="$row[phone]"/><br/>
+            <label for="fname">Prénom : </label><input name="fname" type="text" value="$row[fname]"/><br/>
+            <label for="lname">Nom : </label><input  name="lname" type="text" value="$row[lname]"/><br/>
+            <label for="email">E-mail : </label><input  name="email" type="text" value="$row[email]"/><br/>
+            <label for="oldpw">Ancien mot de passe : </label><input  type="password" name="oldpw"/><br/>
+            <label for="newpw">Nouveau mot de passe : </label><input  type="password" name="newpw"/><br/>
+            <label for="address">Adresse : </label><input  name ="address" type="text" value="$row[address]"/><br/>
+            <label for="city">Ville : </label><input name ="city" type="text" value="$row[city]"/><br/>
+            <label for="postal_code">Code postal : </label><input  name="postal_code" type="text" value="$row[postal_code]"/><br/>
+            <label for="phone">Téléphone : </label><input name="phone" type="tel" value="$row[phone]"/><br/>
             <input type="submit" class="submit" name="submit" value="Modifier le compte" ><br/>
 EOL;
            }
