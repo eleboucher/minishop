@@ -18,7 +18,7 @@
       </form>
 
       <h3>Order:</h3>
-      <?php include ("templates/order.php"); ?>
+      <?php include("templates/order.php"); ?>
     </div>
     <?php include("templates/footer.php")?>
 </body>

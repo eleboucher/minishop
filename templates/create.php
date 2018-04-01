@@ -64,19 +64,6 @@ if (isset($_POST['submit']) && $_POST['submit'] === "Submit")
   }
 }
 
-if (isset($_POST['submit']) && $_POST['submit'] === "Delete")
-{
-  if ($_SESSION["logged_in"] === TRUE)
-  {
-    $delete = "DELETE FROM `user` WHERE email = '$_SESSION[user_email]'";
-    query($delete);
-    $_SESSION["user"] = NULL;
-    echo "Votre compte a été supprimé avec succès.\n";    
-    header("Location: index.php");
-  }
-  else
-    echo "Aucun compte n'est actuallement connecté.\n";
-}
 ?>
 
 <form method="post" id="create_account">

@@ -19,11 +19,13 @@ if(!isset($_SESSION)) {
     }
     if (isset($_SESSION["products"]))
     {
+        $total = 0;
         foreach ($_SESSION["products"] as $product => $id) {
             $ret = query("SELECT * FROM `product` where id = $id[id] ");
             if (mysqli_num_rows($ret) > 0) {
                 while($row = mysqli_fetch_assoc($ret)) {
                     $price = display_price($row["price"]);
+                    $total += $id["quantity"] * $row["price"];
                     echo <<<EOL
                     <div class="item">
                     <div class="image">
@@ -36,8 +38,8 @@ if(!isset($_SESSION)) {
                        
                         <div class="button">
                             <form method="post" class="form1">
-                                <input type="number" name="quantity" min="1" max="$row[stock]" value="$id[quantity]"">
-                                <button type="submit" name="quantity" value="$row[id]">Modifier</button>
+                                <input type="number" name="quantity" min="1" max="$row[stock]" value="$id[quantity]">
+                                <button type="submit" name="id" value="$row[id]">Modifier</button>
                             </form>
                             <form method="post" class="form2">
                             <button type="submit" name="del" value="$id[id]">Supprimer</button>
@@ -50,12 +52,16 @@ EOL;
                   
             }
         } 
-        if (isset($_SESSION["products"]) && $_SESSION["products"] != NULL)
+        if (isset($_SESSION["products"]) && $_SESSION["products"] != NULL){
+            $total = display_price($total);
         echo <<<EOL
         <form action="buy.php" style="float:right;">
+            <span>Prix Total: $total$ </span>
             <button type="submit" class="buy">Commander</button>
         </form>
+       
 EOL;
+    }   
     }
     else 
     echo "Panier Vide";
