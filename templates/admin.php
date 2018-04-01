@@ -380,16 +380,16 @@ EOL;
   <fieldset>
   <h3>Modifier un compte</h3>      
   <?php      
-    $ret = query("SELECT lname FROM `user`");
+    $ret = query("SELECT email FROM `user`");
     echo <<<EOL
         <form method="get">
-        <select name="lname">
+        <select name="email">
             <option value="all">Aucune</option>
 EOL;
     if (mysqli_num_rows($ret) > 0) {
         while($row = mysqli_fetch_assoc($ret)) {
             echo <<<EOL
-            <option value="$row[lname]">$row[lname]</option>
+            <option value="$row[email]">$row[email]</option>
 EOL;
         }
     }
@@ -400,8 +400,8 @@ EOL;
 EOL;
 ?>
 <?php
-    if (isset($_GET['lname']) && $_GET['lname'] !== "")
-        $ret = query("SELECT * FROM `user` WHERE lname = '$_GET[lname]'");
+    if (isset($_GET['email']) && $_GET['email'] !== "")
+        $ret = query("SELECT * FROM `user` WHERE email = '$_GET[email]'");
           if (mysqli_num_rows($ret) > 0) {
             while($row = mysqli_fetch_assoc($ret)) {
               echo <<<EOL
