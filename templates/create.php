@@ -1,6 +1,7 @@
 <?php
-include ("ressources/handle_db.php");
-session_start();
+include_once ("ressources/handle_db.php");
+if (isset($_SESSION))
+    session_start();
 
 function check_error_form()
 {

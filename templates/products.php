@@ -1,5 +1,6 @@
 <?php
-    session_start();
+    if (isset($_SESSION))
+        session_start();
     if (isset($_POST["add"]) && is_numeric($_POST["add"]) && isset($_POST["quantity"]) && is_numeric($_POST["quantity"])){
         $index = array_search($_POST["add"], array_column($_SESSION["products"], "id"));
         if ($index === false)

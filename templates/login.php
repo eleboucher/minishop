@@ -1,6 +1,7 @@
 <?php
-include ("ressources/handle_db.php");
-session_start();
+include_once ("ressources/handle_db.php");
+if (isset($_SESSION))
+    session_start();
 
 function connexion($email, $hash_passwd)
 {  
@@ -26,7 +27,7 @@ if (isset($_POST['submit']) && $_POST['submit'] === "Login")
         $_SESSION["logged_in"] = TRUE;
         $_SESSION["user_email"] = $_POST["email"];
         echo "Connexion réussie. Bienvenue !\n";
-        //header("Location: index.php");
+        header("Location: index.php");
     }
     else
         echo "L'email ou le mot de passe est incorrect.\n";
@@ -36,10 +37,10 @@ else if (isset($_POST['submit']) && $_POST['submit'] === "Se déconnecter")
     session_unset();
     session_destroy();
     echo "Vous êtes déconnecté.\n";
-    //header("Location: index.php");
+    header("Location: index.php");
 }
 ?>
-
+<form method="post" id="connection">
     <fieldset>
         <h1>Se connecter</h1>
         <label for="email">E-mail : </label><input id="email" name="email" type="email"/><br/>
@@ -47,6 +48,6 @@ else if (isset($_POST['submit']) && $_POST['submit'] === "Se déconnecter")
         <input type="submit" class="submit" name="submit" value="Login" ><br/>
     </fieldset>
 </form>
-<form method="post" id="connection">
+<form method="post" id="deconnexion">
     <input type="submit" class="submit" name= "submit" value="Se déconnecter"/>
  </form>
