@@ -21,9 +21,10 @@ function check_error_form_change()
     $error = "Le numéro de téléphone n'est pas valide.";
     return ($error);
   }
+  return ($error);
 }
 
-if ($_POST['submit'] == "Change")
+if (isset($_POST['submit']) && $_POST['submit'] == "Change")
 {
   $error = check_error_form_change();
   if ($error === TRUE)
@@ -35,7 +36,7 @@ if ($_POST['submit'] == "Change")
     $city = $_POST['city'];
     $postal_code = $_POST['postal_code'];
     $phone = $_POST['phone'];
-    $change = "UPDATE `user` SET fname = $fname, lname = $lname, email = $email, address = $address, city = $city, postal_code = $postal_code, phone = $phone WHERE email = '$_SESSION[user_email]'";
+    $change = "UPDATE `user` SET fname = '$fname', lname = '$lname', email = '$email', address = '$address', city = '$city', postal_code = '$postal_code', phone = '$phone' WHERE email = '$_SESSION[user_email]'";
     query($change);
     $_SESSION['user_email'] = $_POST['email'];
     echo "Votre compte a été modifié avec succès.\n";
@@ -43,7 +44,7 @@ if ($_POST['submit'] == "Change")
   else
     echo $error."\n";
 }
-if ($_SESSION["logged_in"] === TRUE)
+if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"] === TRUE)
 {
       ?>
       <form method="post" id="change_account">
