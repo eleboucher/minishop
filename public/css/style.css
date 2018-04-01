@@ -1,4 +1,5 @@
 * {
+    -moz-box-sizing: border-box; 
     box-sizing: border-box;
 }
 
@@ -7,6 +8,8 @@ body {
     margin:0;
     padding:0;
     height:100%;
+    display : table;
+	width: 100%;
 }
 
 nav ul {
@@ -46,9 +49,8 @@ nav li a:hover {
 }
 
 .footer{
-    position: relative;
-    bottom:0;
-    width:100%;
+	display : table-row;
+	height: 40px;
 }
 
 .shopping-cart {
@@ -142,6 +144,13 @@ nav li a:hover {
 .form1{
     float: left
 }
+.order {
+    border-top:  1px solid #E1E8EE;
+    border-bottom:  1px solid #E1E8EE;
+    padding-left: 20px;
+    padding-top:10px;
+    padding-bottom:10px;
+}
 .buy {
     border-radius: 5px;
     padding: 0px 10px;
@@ -155,7 +164,9 @@ nav li a:hover {
 .buy:hover {
     background-color: #4fc3f7;
 }
-
+.order-price{
+    float:right;
+}
 
 
 @media (max-width: 800px) {
