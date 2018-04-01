@@ -33,11 +33,13 @@ if (isset($_POST['submit']) && $_POST['submit'] === "Login")
 }
 ?>
 
+if ()
+
 <form method="post" id="connection">
     <fieldset>
         <h1>Se connecter</h1>
-        <label for="email">E-mail : </label><input id="email" name="email" type="email"/><br>
-        <label for="passwd">Mot de passe : </label><input id="passwd" name="passwd" type="password"/><br>
+        <label for="email">E-mail : </label><input id="email" name="email" type="email"/><br/>
+        <label for="passwd">Mot de passe : </label><input id="passwd" name="passwd" type="password"/><br/>
         <input type="submit" class="submit" name="submit" value="Login" ><br/>
     </fieldset>
 </form>
