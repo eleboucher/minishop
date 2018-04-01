@@ -196,8 +196,13 @@ if (isset($_POST['submit']) && $_POST['submit'] == "Modifier le compte")
   $email = escape_string($_POST['email']);
   $query = query("SELECT passwd FROM `user` WHERE email = '$email'");
   if (mysqli_num_rows($query) > 0)
+  {
     $check_pw = mysqli_fetch_assoc($query);
-  $error = check_error_form_change($check_pw);
+    $error = check_error_form_change($check_pw);
+  }
+  else {
+    $error = false;
+  }
   if ($error === TRUE)
   {
     $email = escape_string($_POST['email']);
