@@ -17,7 +17,7 @@ function connexion($email, $hash_passwd)
     return (FALSE);
 }
 
-if (isset($_POST['submit']) && $_POST['submit'] === "Connect")
+if (isset($_POST['submit']) && $_POST['submit'] === "Login")
 {
     $email = $_POST["email"];
     $hash_passwd = hash("whirlpool", $_POST["passwd"]);
@@ -39,6 +39,6 @@ if (isset($_POST['submit']) && $_POST['submit'] === "Connect")
         <h1>Se connecter</h1>
         <label for="email">E-mail : </label><input id="email" name="email" type="email"/><br>
         <label for="passwd">Mot de passe : </label><input id="passwd" name="passwd" type="password"/><br>
-        <input type="submit" class="submit" name="connection" value="Connect"/>
+        <input type="submit" class="submit" name="submit" value="Login" ><br/>
     </fieldset>
 </form>
