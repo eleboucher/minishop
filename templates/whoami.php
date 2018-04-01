@@ -23,32 +23,32 @@ function check_error_form_change()
   }
 }
 
-if ($_POST['submit'] === "submit" && check_error_form_change() === TRUE)
+if ($_POST['submit'] == "Change")
 {
-  $fname = $_POST['fname'];
-  $lname = $_POST['lname'];
-  $email = $_POST['email'];
-  $address = $_POST['address'];
-  $city = $_POST['city'];
-  $postal_code = $_POST['postal_code'];
-  $phone = $_POST['phone'];
-  $change = "UPDATE `user` SET fname = $fname, lname = $lname, email = $email, address = $address, city = $city, postal_code = $postal_code, phone = $phone WHERE email = '$_SESSION[user_email]'";
-  query($change);
-  echo "Votre compte a été modifié.\n";
+  $error = check_error_form_change();
+  if ($error === TRUE)
+  {
+    $fname = $_POST['fname'];
+    $lname = $_POST['lname'];
+    $email = $_POST['email'];
+    $address = $_POST['address'];
+    $city = $_POST['city'];
+    $postal_code = $_POST['postal_code'];
+    $phone = $_POST['phone'];
+    $change = "UPDATE `user` SET fname = $fname, lname = $lname, email = $email, address = $address, city = $city, postal_code = $postal_code, phone = $phone WHERE email = '$_SESSION[user_email]'";
+    query($change);
+    $_SESSION['user_email'] = $_POST['email'];
+    echo "Votre compte a été modifié avec succès.\n";
+  }
+  else
+    echo $error."\n";
 }
 if ($_SESSION["logged_in"] === TRUE)
 {
       ?>
-      <form method="post" action="whoami.php" id="change_account">
+      <form method="post" id="change_account">
         <fieldset>
           <?php
-          if(isset($error))
-          {
-            if ($error == TRUE)
-              echo "Votre compte a été créé avec succès\n";
-            else
-              echo $error."\n";
-          }
           $ret = query("SELECT * FROM `user` WHERE email = '$_SESSION[user_email]'");
           if (mysqli_num_rows($ret) > 0) {
             while($row = mysqli_fetch_assoc($ret)) {
@@ -61,7 +61,7 @@ if ($_SESSION["logged_in"] === TRUE)
           <label for="city">Ville : </label><input id="city" name ="city" type="text" value="$row[city]"/><br/>
           <label for="postal_code">Code postal : </label><input id="postal_code" name="postal_code" type="text" value="$row[postal_code]"/><br/>
           <label for="phone">Téléphone : </label><input id="phone" name="phone" type="tel" value="$row[phone]"/><br/>
-          <input type="submit" class="submit" name="submit" value="submit" ><br/>
+          <input type="submit" class="submit" name="submit" value="Change" ><br/>
 EOL
 ?>
 </fieldset>
