@@ -13,7 +13,17 @@
         if (mysqli_num_rows($ret) > 0) {
             while($row = mysqli_fetch_assoc($ret)) {
                 $orders = query("SELECT * from order_item where order_item.order_id = $row[id]");
-                echo '<div>'.$row['date'].'<div>';
+                $total_price_q = query("SELECT SUM(order_item.quantity * p.price) as total_price from order_item  join product p on p.id = order_item.product_id where order_item.order_id = $row[id] GROUP BY order_item.order_id");
+                if (mysqli_num_rows($total_price_q) > 0){
+                    $total_price = display_price(mysqli_fetch_assoc($total_price_q)['total_price']);
+                }
+                else $total_price = display_price(0);
+                echo <<<EOL
+                <div style="float:right">
+                <span>Prix total de la commande: {$total_price}$</span>
+                <span>$row[date]</span>
+                </div>
+EOL;
                 if (mysqli_num_rows($orders) > 0) {
                     while($products = mysqli_fetch_assoc($orders)) {
                         $product = query("SELECT * from product where id = $products[product_id]");
@@ -24,6 +34,7 @@
                                 <div class="item-ordered">
                                     <div class="description">
                                         <span>$item[name]</span>
+                                        <span>$products[quantity]</span>
                                     </div>
                                     <div class="total-price">$price $</div> 
                                 </div>
@@ -32,18 +43,11 @@ OEL;
                         }
                     }
                     echo <<<EOL
-                    <div><p>$products[quantity]</p></div>
+                    <div><p></p></div>
 EOL;
                 }
                 
-                $total_price_q = query("SELECT SUM(order_item.quantity * p.price) as total_price from order_item  join product p on p.id = order_item.product_id where order_item.order_id = $row[id] GROUP BY order_item.order_id");
-                if (mysqli_num_rows($total_price_q) > 0){
-                    $total_price = display_price(mysqli_fetch_assoc($total_price_q)['total_price']);
-                }
-                else $total_price = display_price(0);
-                echo <<<EOL
-                <div style="float:right">Prix total de la commande: {$total_price}$</div>
-EOL;
+
             }
         }
         else
