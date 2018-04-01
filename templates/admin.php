@@ -19,23 +19,23 @@ if (isset($_POST['submit']) && $_POST['submit'] === "Ajouter un produit") {
     }
 }
 
-if (isset($_GET['submit']) && $_GET['submit'] == "Modifier le produit") {
-    if (!isset($_GET['name']) || !isset($_GET['description']) || !isset($_GET['img']) || !isset($_GET['price']) || !isset($_GET['stock']) || 
-    $_GET['name'] === "" || $_GET['description'] === "" || $_GET['img'] === "" || $_GET['price'] === "" || $_GET['stock'] === "") {
+if (isset($_POST['submit']) && $_POST['submit'] == "Modifier le produit") {
+    if (!isset($_POST['name']) || !isset($_POST['description']) || !isset($_POST['img']) || !isset($_POST['price']) || !isset($_POST['stock']) || 
+    $_POST['name'] === "" || $_POST['description'] === "" || $_POST['img'] === "" || $_POST['price'] === "" || $_POST['stock'] === "") {
         echo "Tous les champs doivent être remplis.\n";
     }
     else {
-        $name = $_GET['name'];
-        $description = $_GET['description'];
-        $img = $_GET['img'];
-        $price = $_GET['price'];
-        $stock = $_GET['stock'];
-        query("UPDATE `product` SET name = '$name', description = '$description', img = '$img', price = '$price', stock = '$stock' WHERE name = '$_GET[product]'");
+        $name = mysql_real_escape_string($_POST['name']);
+        $description = mysql_real_escape_string($_POST['description']);
+        $img = mysql_real_escape_string($_POST['img']);
+        $price = mysql_real_escape_string($_POST['price']);
+        $stock = mysql_real_escape_string($_POST['stock']);
+        query("UPDATE `product` SET name = '$name', description = '$description', img = '$img', price = '$price', stock = '$stock' WHERE name = '$_POST[product]'");
     }
 }
 
-if (isset($_GET['submit']) && $_GET['submit'] == "Supprimer le produit") {
-        query("DELETE FROM product WHERE name = '$_GET[name]'");
+if (isset($_POST['submit']) && $_POST['submit'] == "Supprimer le produit") {
+        query("DELETE FROM product WHERE name = '$_POST[name]'");
 }
 
 if (isset($_POST['submit']) && $_POST['submit'] === "Ajouter une catégorie") {
@@ -48,21 +48,21 @@ if (isset($_POST['submit']) && $_POST['submit'] === "Ajouter une catégorie") {
     }
 }
 
-if (isset($_GET['submit']) && $_GET['submit'] === "Modifier la catégorie") {
-    if (!isset($_GET['name']) || $_GET['name'] === "" || !isset($_GET['newname']) || $_GET['newname'] === "") {
+if (isset($_POST['submit']) && $_POST['submit'] === "Modifier la catégorie") {
+    if (!isset($_POST['name']) || $_POST['name'] === "" || !isset($_POST['newname']) || $_POST['newname'] === "") {
         echo "Le champ doit être rempli.\n";
     }
     else {
-        query("UPDATE `category` SET name = '$_GET[newname]' WHERE name = '$_GET[name]'");
+        query("UPDATE `category` SET name = '$_POST[newname]' WHERE name = '$_POST[name]'");
     }
 }
 
-if (isset($_GET['submit']) && $_GET['submit'] === "Lier une categorie") {
-    query("REPLACE INTO category_map (category_id, product_id) VALUE ((SELECT id from category where name = '$_GET[category]'), (select id from product where name = '$_GET[product]')) ");
+if (isset($_POST['submit']) && $_POST['submit'] === "Lier une categorie") {
+    query("REPLACE INTO category_map (category_id, product_id) VALUE ((SELECT id from category where name = '$_POST[category]'), (select id from product where name = '$_POST[product]')) ");
 }
 
-if (isset($_GET['submit']) && $_GET['submit'] == "Supprimer la categorie") {
-    query("DELETE FROM category WHERE name = '$_GET[name]'");
+if (isset($_POST['submit']) && $_POST['submit'] == "Supprimer la categorie") {
+    query("DELETE FROM category WHERE name = '$_POST[name]'");
 }
 
 function check_error_form()
@@ -125,72 +125,72 @@ if (isset($_POST['submit']) && $_POST['submit'] === "Ajouter un compte")
 function check_error_form_change($check_pw)
 {
   $error = TRUE;
-  if (!isset($_GET['fname']) || !isset($_GET['lname']) || !isset($_GET['email'])
-  || !isset($_GET['oldpw']) || $_GET['fname'] === "" || $_GET['lname'] === "" || $_GET['email'] === "" || $_GET['oldpw'] === ""){
+  if (!isset($_POST['fname']) || !isset($_POST['lname']) || !isset($_POST['email'])
+  || !isset($_POST['oldpw']) || $_POST['fname'] === "" || $_POST['lname'] === "" || $_POST['email'] === "" || $_POST['oldpw'] === ""){
     $error = "Tous les champs obligatoires doivent être remplis.";
     return ($error);
   }
-  if (preg_match("/^.+@.+\..+$/", $_GET['email']) == FALSE) {
+  if (preg_match("/^.+@.+\..+$/", $_POST['email']) == FALSE) {
     $error = "L'adresse email n'est pas valide.";
     return ($error);
   }
-  else if (preg_match("/^[0-9]+\s+.+\s+.+\s?$/", $_GET['address']) == FALSE) {
+  else if (preg_match("/^[0-9]+\s+.+\s+.+\s?$/", $_POST['address']) == FALSE) {
     $error = "L'adresse n'est pas valide.";
     return ($error);
   }
-  else if (preg_match("/^[0-9]{5}$/", $_GET['postal_code']) == FALSE) {
+  else if (preg_match("/^[0-9]{5}$/", $_POST['postal_code']) == FALSE) {
     $error = "Le code postal n'est pas valide.";
     return ($error);
   }
-  else if (preg_match("/^\+?[0-9]+$/", $_GET['phone']) == FALSE) {
+  else if (preg_match("/^\+?[0-9]+$/", $_POST['phone']) == FALSE) {
     $error = "Le numéro de téléphone n'est pas valide.";
     return ($error);
   }
-  else if (isset($_GET['oldpw']) && hash("whirlpool", $_GET['oldpw']) !== $check_pw['passwd']) {
+  else if (isset($_POST['oldpw']) && hash("whirlpool", $_POST['oldpw']) !== $check_pw['passwd']) {
     $error = "Ancien mot de passe erroné.\n";
     return ($error);
   }
-  else if (isset($_GET['oldpw']) ) {
-    if (strlen($_GET['newpw']) < 5) {
+  else if (isset($_POST['oldpw']) ) {
+    if (strlen($_POST['newpw']) < 5) {
       $error = "Le nouveau mot de passe doit faire au moins 5 caractères.";
       return ($error);
     }
-    else if (preg_match('~[0-9]+~', $_GET['newpw']) == FALSE) {
+    else if (preg_match('~[0-9]+~', $_POST['newpw']) == FALSE) {
       $error = "Le nouveau mot de passe doit comporter au moins un chiffre.";
       return ($error);
     }
   }
   return ($error);
 }
-if (isset($_GET['submit']) && $_GET['submit'] == "Modifier le compte")
+if (isset($_POST['submit']) && $_POST['submit'] == "Modifier le compte")
 {
-  $query = query("SELECT passwd FROM `user` WHERE email = '$_GET[email]'");
+  $query = query("SELECT passwd FROM `user` WHERE email = '$_POST[email]'");
   if (mysqli_num_rows($query) > 0)
     $check_pw = mysqli_fetch_assoc($query);
   $error = check_error_form_change($check_pw);
   if ($error === TRUE)
   {
-    $fname = $_GET['fname'];
-    $lname = $_GET['lname'];
-    $email = $_GET['email'];
+    $fname = $_POST['fname'];
+    $lname = $_POST['lname'];
+    $email = $_POST['email'];
     if (isset($oldpw))
-      $oldpw = $_GET['oldpw'];
+      $oldpw = $_POST['oldpw'];
     if (isset($newpw))
-      $newpw = $_GET['newpw'];
-    $address = $_GET['address'];
-    $city = $_GET['city'];
-    $postal_code = $_GET['postal_code'];
-    $phone = $_GET['phone'];
-    $change = "UPDATE `user` SET passwd ='" . hash('whirlpool', $_GET['newpw']) . "', fname = '$fname', lname = '$lname', email = '$email', address = '$address', city = '$city', postal_code = '$postal_code', phone = '$phone' WHERE email = '$_SESSION[user_email]'";
+      $newpw = $_POST['newpw'];
+    $address = $_POST['address'];
+    $city = $_POST['city'];
+    $postal_code = $_POST['postal_code'];
+    $phone = $_POST['phone'];
+    $change = "UPDATE `user` SET passwd ='" . hash('whirlpool', $_POST['newpw']) . "', fname = '$fname', lname = '$lname', email = '$email', address = '$address', city = '$city', postal_code = '$postal_code', phone = '$phone' WHERE email = '$_SESSION[user_email]'";
     query($change);
-    $_SESSION['user_email'] = $_GET['email'];
+    $_SESSION['user_email'] = $_POST['email'];
   }
   else
     echo $error."\n";
 }
 
-if (isset($_GET['submit']) && $_GET['submit'] == "Supprimer le compte") {
-    query("DELETE FROM user WHERE lname = '$_GET[lname]'");
+if (isset($_POST['submit']) && $_POST['submit'] == "Supprimer le compte") {
+    query("DELETE FROM user WHERE lname = '$_POST[lname]'");
 }
 
 ?>
@@ -208,20 +208,20 @@ if (isset($_GET['submit']) && $_GET['submit'] == "Supprimer le compte") {
   </fieldset>
 </form>
 
-<form method="get" id="change_object">
+<form method="post" id="change_object">
   <fieldset>
   <h3>Modifiez votre produit</h3>      
   <?php
     $ret = query("SELECT name FROM `product`");
 
     echo <<<EOL
-        <form method="get">
+        <form method="post">
         <select name="product">
             <option value="all">Aucune</option>
 EOL;
     if (mysqli_num_rows($ret) > 0) {
         while($row = mysqli_fetch_assoc($ret)) {
-           if (isset($_GET['product']) && $row["name"] == $_GET['product'])
+           if (isset($_POST['product']) && $row["name"] == $_POST['product'])
            {
             echo <<<EOL
             <option value="$row[name]" selected >$row[name]</option>
@@ -240,8 +240,8 @@ EOL;
 EOL;
 ?>
 <?php
-        if (isset($_GET["product"])){
-        $ret = query("SELECT * FROM `product` WHERE name = '$_GET[product]'");
+        if (isset($_POST["product"])){
+        $ret = query("SELECT * FROM `product` WHERE name = '$_POST[product]'");
           if (mysqli_num_rows($ret) > 0) {
             while($row = mysqli_fetch_assoc($ret)) {
               echo <<<EOL
@@ -260,13 +260,13 @@ EOL;
   </fieldset>
 </form>
 
-<form method="get" id="delete_object">
+<form method="post" id="delete_object">
   <fieldset>
   <h3>Supprimer un produit</h3>      
   <?php      
     $ret = query("SELECT name FROM `product`");
     echo <<<EOL
-        <form method="get">
+        <form method="post">
         <select name="name">
             <option value="all">Aucune</option>
 EOL;
@@ -296,13 +296,13 @@ EOL;
 </form>
 
 
-<form method="get" id="link_category">
+<form method="post" id="link_category">
   <fieldset>
   <h3>Modifiez une catégorie</h3>      
   <?php      
     $ret = query("SELECT name FROM `category`");
     echo <<<EOL
-        <form method="get">
+        <form method="post">
         <select name="category">
             <option value="all">Aucune</option>
 EOL;
@@ -334,7 +334,7 @@ EOL;
 ?>
   </fieldset>
 </form>
-<form method="get" id="change_category">
+<form method="post" id="change_category">
   <fieldset>
   <h3>Modifiez une catégorie</h3>
     
@@ -342,13 +342,13 @@ EOL;
     $ret = query("SELECT name FROM `category`");
 
     echo <<<EOL
-        <form method="get">
+        <form method="post">
         <select name="category">
             <option value="all">Aucune</option>
 EOL;
     if (mysqli_num_rows($ret) > 0) {
         while($row = mysqli_fetch_assoc($ret)) {
-           if (isset($_GET['category']) && $row["name"] == $_GET['category'])
+           if (isset($_POST['category']) && $row["name"] == $_POST['category'])
            {
             echo <<<EOL
             <option value="$row[name]" selected >$row[name]</option>
@@ -367,8 +367,8 @@ EOL;
 EOL;
 ?>
 <?php
-        if (isset($_GET["category"])){
-        $ret = query("SELECT * FROM `category` WHERE name = '$_GET[category]'");
+        if (isset($_POST["category"])){
+        $ret = query("SELECT * FROM `category` WHERE name = '$_POST[category]'");
           if (mysqli_num_rows($ret) > 0) {
             while($row = mysqli_fetch_assoc($ret)) {
               echo <<<EOL
@@ -384,13 +384,13 @@ EOL;
   </fieldset>
 </form>
 
-<form method="get" id="delete_category">
+<form method="post" id="delete_category">
   <fieldset>
   <h3>Supprimer une catégorie</h3>      
   <?php      
     $ret = query("SELECT name FROM `category`");
     echo <<<EOL
-        <form method="get">
+        <form method="post">
         <select name="name">
             <option value="all">Aucune</option>
 EOL;
@@ -427,13 +427,13 @@ EOL;
   </fieldset>
 </form>
 
-<form method="get" id="change_account">
+<form method="post" id="change_account">
   <fieldset>
   <h3>Modifier un compte</h3>      
   <?php      
     $ret = query("SELECT email FROM `user`");
     echo <<<EOL
-        <form method="get">
+        <form method="post">
         <select name="email">
             <option value="all">Aucune</option>
 EOL;
@@ -451,8 +451,8 @@ EOL;
 EOL;
 ?>
 <?php
-    if (isset($_GET['email']) && $_GET['email'] !== "")
-        $ret = query("SELECT * FROM `user` WHERE email = '$_GET[email]'");
+    if (isset($_POST['email']) && $_POST['email'] !== "")
+        $ret = query("SELECT * FROM `user` WHERE email = '$_POST[email]'");
           if (mysqli_num_rows($ret) > 0) {
             while($row = mysqli_fetch_assoc($ret)) {
               echo <<<EOL
@@ -474,13 +474,13 @@ EOL;
   </fieldset>
 </form>
 
-<form method="get" id="delete_account">
+<form method="post" id="delete_account">
   <fieldset>
   <h3>Supprimer un compte</h3>      
   <?php      
     $ret = query("SELECT lname FROM `user`");
     echo <<<EOL
-        <form method="get">
+        <form method="post">
         <select name="lname">
             <option value="all">Aucune</option>
 EOL;

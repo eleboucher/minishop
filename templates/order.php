@@ -19,12 +19,13 @@
                         $product = query("SELECT * from product where id = $products[product_id]");
                         if (mysqli_num_rows($product) > 0) {
                             while($item = mysqli_fetch_assoc($product)) {
+                             $price = display_price($item["price"]);
                                 echo <<<OEL
                                 <div class="item-ordered">
                                     <div class="description">
                                         <span>$item[name]</span>
                                     </div>
-                                    <div class="total-price">$item[price]$</div> 
+                                    <div class="total-price">$price $</div> 
                                 </div>
 OEL;
                             }

@@ -15,8 +15,8 @@
             $_SESSION["products"] = array(array("id" => $_POST["add"], "quantity" => $_POST["quantity"]));
         }
     }
-    include ("ressources/handle_db.php");
-
+    include_once ("ressources/handle_db.php");
+    include_once ("ressources/display_price.php");
     $ret = query("SELECT * FROM `category`");
     echo <<<EOL
         <form method="get">
@@ -59,7 +59,7 @@ EOL;
         $ret = query("SELECT * FROM `product` WHERE product.id  = '$categories[product_id]'");
             if (mysqli_num_rows($ret) > 0) {
                 while($row = mysqli_fetch_assoc($ret)) {
-
+                    $price = display_price($row["price"]);
                     echo <<<EOL
                         <div class="item">
                             <div class="image">
@@ -76,7 +76,7 @@ EOL;
                                     <button type="submit" name="add" value="$row[id]" class="buy">Ajouter au panier</button>
                                 </form>  
                             </div>
-                            <div class="total-price">$row[price]$</div> 
+                            <div class="total-price">$price $</div> 
                         </div>
 EOL;
                 }  

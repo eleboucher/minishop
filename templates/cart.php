@@ -1,5 +1,6 @@
 <?php
 include_once ("ressources/handle_db.php");
+include_once ("ressources/display_price.php");
 if(!isset($_SESSION)) {
     session_start(); 
 }
@@ -22,6 +23,7 @@ if(!isset($_SESSION)) {
             $ret = query("SELECT * FROM `product` where id = $id[id] ");
             if (mysqli_num_rows($ret) > 0) {
                 while($row = mysqli_fetch_assoc($ret)) {
+                    $price = display_price($row["price"]);
                     echo <<<EOL
                     <div class="item">
                     <div class="image">
@@ -41,7 +43,7 @@ if(!isset($_SESSION)) {
                             <button type="submit" name="del" value="$id[id]">Supprimer</button>
                             </form>  
                         </div>
-                        <div class="total-price">$row[price]$</div> 
+                        <div class="total-price">$price $</div> 
                     </div>
 EOL;
                 }
