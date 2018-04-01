@@ -59,6 +59,10 @@ if (isset($_GET['submit']) && $_GET['submit'] === "Modifier une catégorie") {
     }
 }
 
+if (isset($_GET['submit']) && $_GET['submit'] == "Supprimer la categorie") {
+    query("DELETE FROM category WHERE name = '$_GET[name]'");
+}
+
 function check_error_form()
 {
   $error = TRUE;
@@ -120,7 +124,7 @@ function check_error_form_change($check_pw)
 {
   $error = TRUE;
   if (!isset($_GET['fname']) || !isset($_GET['lname']) || !isset($_GET['email'])
-  || !isset($_GET['passwd']) || $_GET['fname'] === "" || $_GET['lname'] === "" || $_GET['email'] === ""){
+  || !isset($_GET['oldpw']) || $_GET['fname'] === "" || $_GET['lname'] === "" || $_GET['email'] === "" || $_GET['oldpw'] === ""){
     $error = "Tous les champs obligatoires doivent être remplis.";
     return ($error);
   }
@@ -181,6 +185,10 @@ if (isset($_GET['submit']) && $_GET['submit'] == "Modifier le compte")
   }
   else
     echo $error."\n";
+}
+
+if (isset($_GET['submit']) && $_GET['submit'] == "Supprimer le compte") {
+    query("DELETE FROM user WHERE lname = '$_GET[lname]'");
 }
 
 ?>
@@ -287,6 +295,7 @@ EOL;
 
 <form method="get" id="change_category">
   <fieldset>
+  <h3>Modifiez une catégorie</h3>      
   <?php      
     $ret = query("SELECT name FROM `category`");
     echo <<<EOL
@@ -313,7 +322,6 @@ EOL;
           if (mysqli_num_rows($ret) > 0) {
             while($row = mysqli_fetch_assoc($ret)) {
               echo <<<EOL
-            <h3>Modifiez une catégorie</h3>
             <label for="name">Ancien nom : </label><input id="name" name="name" type="text" value="$row[name]"/><br/>
             <label for="name">Nouveau nom : </label><input id="newname" name="newname" type="text""/><br/>
             <input type="submit" class="submit" name="submit" value="Modifier la catégorie"><br/>
@@ -325,13 +333,37 @@ EOL;
   </fieldset>
 </form>
 
-<p>Supprimer une catégorie</p><br/>
+<form method="get" id="delete_category">
+  <fieldset>
+  <h3>Supprimer une catégorie</h3>      
+  <?php      
+    $ret = query("SELECT name FROM `category`");
+    echo <<<EOL
+        <form method="get">
+        <select name="name">
+            <option value="all">Aucune</option>
+EOL;
+    if (mysqli_num_rows($ret) > 0) {
+        while($row = mysqli_fetch_assoc($ret)) {
+            echo <<<EOL
+            <option value="$row[name]">$row[name]</option>
+EOL;
+        }
+    }
+    echo <<<EOL
+    <input type='submit' name='submit' value="Supprimer la categorie"/>
+    </select>
+    </form>
+EOL;
+?>
+  </fieldset>
+</form>
 
 
 <h2>Gérer les utilisateurs</h2>
 <form method="post" id="add_account">
   <fieldset>
-    <h1>Ajouter un compte</h1>
+    <h3>Ajouter un compte</h3>
     <label for="fname">Prénom : </label><input id="fname" name="fname" type="text"/><br/>
     <label for="lname">Nom : </label><input id="lname" name="lname" type="text"/><br/>
     <label for="email">E-mail : </label><input id="email" name="email" type="email"/><br/>
@@ -346,11 +378,12 @@ EOL;
 
 <form method="get" id="change_account">
   <fieldset>
+  <h3>Modifier un compte</h3>      
   <?php      
     $ret = query("SELECT lname FROM `user`");
     echo <<<EOL
         <form method="get">
-        <select name="user">
+        <select name="lname">
             <option value="all">Aucune</option>
 EOL;
     if (mysqli_num_rows($ret) > 0) {
@@ -367,14 +400,14 @@ EOL;
 EOL;
 ?>
 <?php
-        $ret = query("SELECT * FROM `user` WHERE name = '$_GET[user]'");
+    if (isset($_GET['lname']) && $_GET['lname'] !== "")
+        $ret = query("SELECT * FROM `user` WHERE lname = '$_GET[lname]'");
           if (mysqli_num_rows($ret) > 0) {
             while($row = mysqli_fetch_assoc($ret)) {
               echo <<<EOL
-            <h3>Modifier un compte</h3>
             <label for="fname">Prénom : </label><input id="fname" name="fname" type="text" value="$row[fname]"/><br/>
             <label for="lname">Nom : </label><input id="lname" name="lname" type="text" value="$row[lname]"/><br/>
-            <label for="email">E-mail : </label><input id="email" name="email" type="email" value="$row[email]"/><br/>
+            <label for="email">E-mail : </label><input id="email" name="email" type="text" value="$row[email]"/><br/>
             <label for="oldpw">Ancien mot de passe : </label><input id="oldpw" type="password" name="oldpw"/><br/>
             <label for="newpw">Nouveau mot de passe : </label><input id="newpw" type="password" name="newpw"/><br/>
             <label for="address">Adresse : </label><input id="address" name ="address" type="text" value="$row[address]"/><br/>
@@ -385,6 +418,32 @@ EOL;
 EOL;
            }
         }
+?>
+  </fieldset>
+</form>
+
+<form method="get" id="delete_account">
+  <fieldset>
+  <h3>Supprimer un compte</h3>      
+  <?php      
+    $ret = query("SELECT lname FROM `user`");
+    echo <<<EOL
+        <form method="get">
+        <select name="lname">
+            <option value="all">Aucune</option>
+EOL;
+    if (mysqli_num_rows($ret) > 0) {
+        while($row = mysqli_fetch_assoc($ret)) {
+            echo <<<EOL
+            <option value="$row[lname]">$row[lname]</option>
+EOL;
+        }
+    }
+    echo <<<EOL
+    <input type='submit' name='submit' value="Supprimer le compte"/>
+    </select>
+    </form>
+EOL;
 ?>
   </fieldset>
 </form>
