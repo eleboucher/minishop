@@ -26,7 +26,7 @@ if (isset($_POST['submit']) && $_POST['submit'] === "Login")
         $_SESSION["logged_in"] = TRUE;
         $_SESSION["user_email"] = $_POST["email"];
         echo "Connexion réussie. Bienvenue !\n";
-        //header("Location: index.php");
+        header("Location: index.php");
     }
     else
         echo "L'email ou le mot de passe est incorrect.\n";
@@ -36,7 +36,7 @@ else if (isset($_POST['submit']) && $_POST['submit'] === "Se déconnecter")
     session_unset();
     session_destroy();
     echo "Vous êtes déconnecté.\n";
-    //header("Location: index.php");
+    header("Location: index.php");
 }
 ?>
 

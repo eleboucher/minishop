@@ -69,7 +69,7 @@ if (isset($_POST['submit']) && $_POST['submit'] === "Delete")
     query($delete);
     $_SESSION["user"] = NULL;
     echo "Votre compte a été supprimé avec succès.\n";    
-    //header("Location: index.php");
+    header("Location: index.php");
   }
   else
     echo "Aucun compte n'est actuallement connecté.\n";
