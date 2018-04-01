@@ -31,7 +31,7 @@ function check_error_form()
     return ($error);
   }
   if (!isset($_POST['fname']) || !isset($_POST['lname']) || !isset($_POST['email'])
-  || !isset($_POST['passwd'])){
+  || !isset($_POST['passwd']) || $_POST['fname'] === "" || $_POST['lname'] === "" || $_POST['email'] === "" || $_POST['passwd'] === ""){
     $error = "Tous les champs obligatoires doivent être remplis.";
     return ($error);
   }

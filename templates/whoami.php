@@ -6,6 +6,11 @@ if (!isset($_SESSION)) {
 function check_error_form_change($check_pw)
 {
   $error = TRUE;
+  if (!isset($_POST['fname']) || !isset($_POST['lname']) || !isset($_POST['email'])
+  || !isset($_POST['passwd']) || $_POST['fname'] === "" || $_POST['lname'] === "" || $_POST['email'] === ""){
+    $error = "Tous les champs obligatoires doivent être remplis.";
+    return ($error);
+  }
   if (preg_match("/^.+@.+\..+$/", $_POST['email']) == FALSE) {
     $error = "L'adresse email n'est pas valide.";
     return ($error);
