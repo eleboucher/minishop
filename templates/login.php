@@ -12,7 +12,6 @@ function connexion($email, $hash_passwd)
     $ret1 = mysqli_fetch_assoc($var1);
   if (mysqli_num_rows($var2) > 0)
     $ret2 = mysqli_fetch_assoc($var2);
-    echo"adfasf";
   if (isset($ret2['email']) && $ret2['email'] === $email && isset($ret1['passwd']) && $ret1['passwd'] === $hash_passwd)
     return ($ret2['id']);
   else

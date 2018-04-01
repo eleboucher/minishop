@@ -8,5 +8,6 @@
         <div class="section">
             <?php include("templates/products.php")?>
         </div>
+        <?php include("templates/footer.php")?>
     </body>
 </html>

@@ -10,7 +10,15 @@
       <form method="post" action="templates/login.php" id="connection">
           <input type="submit" class="submit" name= "submit" value="Se déconnecter"/>
       </form>
+
+      <form method="post" id="delete">
+        <p>Pour supprimer votre compte actuel, appuyez sur le bouton ci-dessous</p>
+        <input type="submit" class="submit" name="submit" value="Delete"/>
+      </form>
+
+      <h3>Order:</h3>
       <?php include ("templates/order.php"); ?>
     </div>
+    <?php include("templates/footer.php")?>
 </body>
 </html>
